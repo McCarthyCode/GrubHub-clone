@@ -8,12 +8,6 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 # Create your models here.
-class Grubber(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address_1 = models.CharField(max_length=255)
-    address_2 = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=40)
-    state = models.CharField(max_length=2)
 
 class GrubberManager(models.Manager):
     def login_reg_validator(self, postData, action):
@@ -45,7 +39,7 @@ class GrubberManager(models.Manager):
                 errors.append("Please enter your email!")
             elif not EMAIL_REGEX.match(postData['email']):
                 errors.append("Please enter a valid email!")
-    
+
         email_exists = User.objects.filter(email_address=postData['email'])
 
         if not errors:
@@ -76,7 +70,8 @@ class GrubberManager(models.Manager):
                 #compares user password with posted password
                 correct_pw = User.check_password(postData['password'])
                 if not correct_pw:
-                    errors.append("This user either doesn't exist or the password is wrong... figure it out.")
+                    errors.append(
+                        "This user either doesn't exist or the password is wrong... figure it out.")
                 #checks if user logging in exists
                 if len(email_exists) == 0:
                     #validates whether user actually exists
@@ -88,5 +83,12 @@ class GrubberManager(models.Manager):
                     user_id = email_exists[0].id
                 return (True, user_id)
         return (False, errors)
+
+class Grubber(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address_1 = models.CharField(max_length=255)
+    address_2 = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=40)
+    state = models.CharField(max_length=2)
 
 #payment info model to be added as unique model - on to many relationship
