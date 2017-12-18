@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-15px">
+        {% if messages %}
+            {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Register</h3>
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="first_name" placeholder="First Name"
+                        value="" class="form-control">
+                    <input type="text" name="last_name" placeholder="Last Name"
+                        value="" class="form-control">
+                    <input type="text" name="email" placeholder="Email"
+                        value="" class="form-control">
+                    <input type="password" name="password" placeholder="Password"
+                        class="form-control">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password"
+                        class="form-control">
+                    <input type="submit" value="Register" class="btn btn-primary mt-15px">
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <h3>Log In</h3>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="email" placeholder="Email" class="form-control">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <input type="submit" value="Log In" class="btn btn-primary mt-15px">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
