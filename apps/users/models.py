@@ -40,7 +40,7 @@ class GrubberManager(models.Manager):
             elif not EMAIL_REGEX.match(postData['email']):
                 errors.append("Please enter a valid email!")
 
-        email_exists = User.objects.filter(email_address=postData['email'])
+        email_exists = User.objects.filter(email=postData['email'])
 
         if not errors:
             # checks if user is registering
@@ -52,43 +52,78 @@ class GrubberManager(models.Manager):
                 #otherwise bcrypt password and create user
                 user = User.objects.create_user(
                     username=postData['username'],
-                    last_name=postData['last_name'],
                     email_address=postData['email'],
                     password=postData['password']
                 )
                 Grubber.objects.create(
                     first_name=postData['first_name'],
                     last_name=postData['last_name'],
-                    address_1=postData['address_1'],
-                    address_2=postData['address_2'],
-                    city=postData['city'],
-                    state=postData['state'],
                     user=user
                 )
                 return (True, user)
             elif action == 'login':
                 #compares user password with posted password
-                correct_pw = User.check_password(postData['password'])
+                correct_pw = email_exists[0].check_password(postData['password'])
                 if not correct_pw:
                     errors.append(
                         "This user either doesn't exist or the password is wrong... figure it out.")
+                    return (False, errors)
                 #checks if user logging in exists
                 if len(email_exists) == 0:
                     #validates whether user actually exists
                     errors.append(
                         "This user either doesn't exist or the password is wrong... figure it out.")
-                return (False, errors)
+                    return (False, errors)
                 #grabs user id to store in session in views
                 if correct_pw:
                     user_id = email_exists[0].id
-                return (True, user_id)
+                    return (True, user_id)
         return (False, errors)
 
 class Grubber(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class AddressManager(models.Model):
+    def address_validator(self, postData):
+        errors = []
+        if len(postData['address_1']) < 1:
+            errors.append("Please enter an address!")
+        if len(postData['city']) < 1:
+            errors.append("Please enter a city!")
+        if len(postData['state']) < 1:
+            errors.append("Please enter a state!")
+        if len(postData['zip_code']) < 1:
+            errors.append("Please enter a zip code!")
+        if len(postData['phone']) < 1:
+            errors.append("Please enter a phone number")
+        
+        if not errors:
+            Address.objects.create(
+                address_1=postData['address_1'],
+                address_2=postData['address_2'],
+                city=postData['city'],
+                state=postData['state'],
+                zip_code=postData['zip_code'],
+                phone_number=postData['phone_number'],
+                cross_street=postData['cross_street'],
+                delivery_instructions=postData['delivery_instructions'],
+                address_label=postData['address_label'],
+                users_addresses=User.objects.get(id=postData['user_id']),
+                #to be pulled from hidden input in template
+            )
+
+
+class Address(models.Model):
     address_1 = models.CharField(max_length=255)
     address_2 = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=40)
     state = models.CharField(max_length=2)
-
+    zip_code = models.IntegerField(max_length=5)
+    phone_number = models.CharField(max_length=15)
+    cross_street = models.CharField(max_length=255, null=True, blank=True)
+    delivery_instructions = models.CharField(max_length=255, null=True, blank=True)
+    users_addresses = models.ForeignKey(User, related_name='addresses')
+    address_label = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 #payment info model to be added as unique model - on to many relationship
