@@ -96,8 +96,13 @@ class AddressManager(models.Model):
             errors.append("Please enter a zip code!")
         if len(postData['phone']) < 1:
             errors.append("Please enter a phone number")
-        
+
+        address_exists = Address.objects.filter(address_1=postData['address_1'])
+
         if not errors:
+            user = User.objects.get(id=postData['user_id'])
+            if len(address_exists) == 0:
+                errors.append("This address exists!")
             Address.objects.create(
                 address_1=postData['address_1'],
                 address_2=postData['address_2'],
@@ -108,9 +113,13 @@ class AddressManager(models.Model):
                 cross_street=postData['cross_street'],
                 delivery_instructions=postData['delivery_instructions'],
                 address_label=postData['address_label'],
-                users_addresses=User.objects.get(id=postData['user_id']),
+                users_addresses=user,
                 #to be pulled from hidden input in template
             )
+            all_addresses = Address.objects.filter(id=user.id)
+            return (True, all_addresses)
+
+        return (False, errors)
 
 
 class Address(models.Model):
@@ -118,7 +127,7 @@ class Address(models.Model):
     address_2 = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=40)
     state = models.CharField(max_length=2)
-    zip_code = models.IntegerField(max_length=5)
+    zip_code = models.CharField(max_length=5)
     phone_number = models.CharField(max_length=15)
     cross_street = models.CharField(max_length=255, null=True, blank=True)
     delivery_instructions = models.CharField(max_length=255, null=True, blank=True)
@@ -126,4 +135,5 @@ class Address(models.Model):
     address_label = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 #payment info model to be added as unique model - on to many relationship
