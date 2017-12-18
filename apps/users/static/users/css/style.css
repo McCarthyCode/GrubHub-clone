@@ -1,0 +1,9 @@
+body {
+    background-color: #eeeeee !important;
+}
+.form-control {
+    max-width: 330px;
+}
+.mt-15px {
+    margin-top: 15px;
+}
