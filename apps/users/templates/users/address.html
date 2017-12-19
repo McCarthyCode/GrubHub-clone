@@ -72,34 +72,22 @@
             </a>
         </div>
         <div class="addresses">
+            {% for address in addresses %}
             <div class="address-card">
                 <div class="address">
-                    <h5>Work</h5>
-                    <p>213 W Institute Pl , 610</p>
+                    <h5>{{address.address_label}}</h5>
+                    <p>{{address.address_1}}</p>
                 </div>
                 <ul class="edit">
                     <li>
-                        <a href="#">Delete</a>
+                        <a href="{{address.id}}/destroy">Delete</a>
                     </li>
                     <li>
                         <a href="#">Edit</a>
                     </li>
                 </ul>
             </div>
-            <div class="address-card">
-                <div class="address">
-                    <h5>Home</h5>
-                    <p>1201 W Chase Ave , 1B</p>
-                </div>
-                <ul class="edit">
-                    <li>
-                        <a href="#">Delete</a>
-                    </li>
-                    <li>
-                        <a href="#">Edit</a>
-                    </li>
-                </ul>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">

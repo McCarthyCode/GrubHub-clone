@@ -48,7 +48,7 @@ def show_addresses(request):
         'user': user,
         'addresses': user.addresses.all()
     }
-    return render(request, "users/addresses.html", context)
+    return render(request, "users/address.html", context)
 
 def add_address(request):
     valid, response = UserAddress.objects.address_validator(request.POST)
@@ -71,6 +71,3 @@ def update_address(request):
 def reset(request):
     request.session.clear()
     return redirect('users:index')
-
-def address(request):
-    return render(request, 'users/address.html')
