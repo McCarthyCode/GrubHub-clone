@@ -17,8 +17,6 @@ def login(request):
             messages.error(request, error)
         return redirect('users:index')
     request.session['id'] = response
-    print response
-    print "S'all good mang"
     return redirect("users:main_profile")
 
 def register(request):

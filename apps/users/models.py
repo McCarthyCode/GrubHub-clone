@@ -14,25 +14,17 @@ class GrubberManager(models.Manager):
         errors = []
         # checks if user is registering
         if action == 'register':
-            if len(postData['username']) < 1:
-                errors.append("Please put in a Username!")
             if len(postData['first_name']) < 1:
                 errors.append("Please put in a first name!")
             if len(postData['last_name']) < 1:
                 errors.append("Please put in a last name!")
-            if len(postData['address_1']) < 1:
-                errors.append("Please enter an address!")
-            if len(postData['city']) < 1:
-                errors.append("Please enter a city!")
-            if len(postData['state']) < 1:
-                errors.append("Please enter a state!")
             if len(postData['email']) < 1:
                 errors.append("Please enter an email!")
             if not EMAIL_REGEX.match(postData['email']):
                 errors.append("Please enter a valid email!")
             if len(postData['password']) < 8:
                 errors.append("Please enter a password!")
-            if postData['conf_pw'] != postData['password']:
+            if postData['confirm_password'] != postData['password']:
                 errors.append("Password must match!!")
         elif action == 'login':
             if len(postData['email']) < 1:
@@ -52,18 +44,18 @@ class GrubberManager(models.Manager):
                 #otherwise bcrypt password and create user
                 user = User.objects.create_user(
                     username=postData['email'],
-                    email_address=postData['email'],
+                    email=postData['email'],
                     password=postData['password']
                 )
-                Grubber.objects.create(
-                    first_name=postData['first_name'],
-                    last_name=postData['last_name'],
-                    user=user
-                )
+                grubber = Grubber.objects.create()
+                grubber.first_name = postData['first_name']
+                grubber.last_name = postData['last_name']
+                grubber.save()
                 return (True, user)
             elif action == 'login':
                 #compares user password with posted password
-                correct_pw = email_exists[0].check_password(postData['password'])
+                correct_pw = email_exists[0].check_password(
+                    postData['password']) if len(email_exists) > 0 else False
                 if not correct_pw:
                     errors.append(
                         "This user either doesn't exist or the password is wrong... figure it out.")
