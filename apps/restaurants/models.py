@@ -79,13 +79,17 @@ class RestaurantAddress(models.Model):
     state = models.CharField(max_length=2)
     zip_code = models.CharField(max_length=5)
     phone_number = models.CharField(max_length=15)
-    rest_addresses = models.ForeignKey(Restaurant, related_name='locations')
+    rest_addresses = models.ForeignKey(Restaurant, related_name='locations', null=True, blank=True)
     address_label = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = RestaurantAddressManager()
 
 class Menu(models.Model):
     menu_item = models.CharField(max_length=50)
-    desc = models.CharField(max_length=500) 
+    desc = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class RestaurantCategory(models.Model):
     restaurant_category_choices = (

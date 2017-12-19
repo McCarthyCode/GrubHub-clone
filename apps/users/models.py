@@ -78,6 +78,10 @@ class GrubberManager(models.Manager):
                 if correct_pw:
                     user_id = email_exists[0].id
                     return (True, user_id)
+            elif action == 'update':
+                user=email_exists[0]
+                user.first_name = postData['first_name']
+                user.last_name = postData['last_name']
         return (False, errors)
 
 class Grubber(models.Model):
@@ -122,6 +126,11 @@ class AddressManager(models.Manager):
             return (True, all_addresses)
 
         return (False, errors)
+
+    # def updated_address(self, postData):
+        
+
+    # def remove_address(self, postData):
 
 
 class UserAddress(models.Model):
