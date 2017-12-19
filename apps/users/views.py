@@ -19,7 +19,7 @@ def login(request):
     request.session['id'] = response
     print response
     print "S'all good mang"
-    return redirect("users:profile")
+    return redirect("users:main_profile")
 
 def register(request):
     gm = GrubberManager()
@@ -28,7 +28,15 @@ def register(request):
         for error in response:
             messages.error(request, error)
         return redirect('users:index')
-    return redirect("users:profile")
+    return redirect("users:main_profile")
+
+def update_name(request):
+    response = Grubber.objects.modify_user(request.POST, 'update_name')
+    return redirect('users:main_profile')
+
+def update_email(request):
+    response = Grubber.objects.modify_user(request.POST, 'update_email')
+    return redirect('users:main_profile')
 
 def show_profile(request):
     context = {

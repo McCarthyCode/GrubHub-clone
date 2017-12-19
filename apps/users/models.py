@@ -78,11 +78,63 @@ class GrubberManager(models.Manager):
                 if correct_pw:
                     user_id = email_exists[0].id
                     return (True, user_id)
-            elif action == 'update':
-                user=email_exists[0]
-                user.first_name = postData['first_name']
-                user.last_name = postData['last_name']
         return (False, errors)
+
+    def modify_user(self, postData, action):
+        user_updating = User.objects.get(id=postData['user_id'])
+        correct_pw = user_updating.check_password(postData['current_password'])
+        errors = []
+
+        if len(postData['current_password']) < 1:
+            errors.append("Please enter your password!")
+
+        if not errors:
+            if action == 'update_name':
+                if len(postData['first_name']) < 1:
+                    errors.append("Please put in a first name!")
+                if len(postData['last_name']) < 1:
+                    errors.append("Please put in a last name!")
+                if not correct_pw:
+                    errors.append("Please enter a password!")
+                if not errors:
+                    user_updating.first_name = postData['first_name']
+                    user_updating.last_name = postData['last_name']
+                    user_updating.save()
+                    return (True, user_updating)
+                return (False, errors)
+            elif action == 'update_email':
+                if len(postData['new_email']) < 1:
+                    errors.append("Please enter an email!")
+                if len(postData['conf_email']) < 1:
+                    errors.append("Please enter an email")
+                if not EMAIL_REGEX.match(postData['new_email']):
+                    errors.append("Please enter a valid email!")
+                if not EMAIL_REGEX.match(postData['conf_email']):
+                    errors.append("Please enter a valid email!")
+                if not correct_pw:
+                    errors.append("Please enter a password!")
+                if not errors:
+                    user_updating.email = postData['new_email']
+                    user_updating.save()
+                    return (True, user_updating)
+            elif action == 'update_password':
+                if len(postData['new_email']) < 1:
+                    errors.append("Please enter an email!")
+                if len(postData['conf_email']) < 1:
+                    errors.append("Please enter an email")
+                if not EMAIL_REGEX.match(postData['new_email']):
+                    errors.append("Please enter a valid email!")
+                if not EMAIL_REGEX.match(postData['conf_email']):
+                    errors.append("Please enter a valid email!")
+                if not correct_pw:
+                    errors.append("Please enter a password!")
+                if not errors:
+                    user_updating.email = postData['new_email']
+                    user_updating.save()
+                    return (True, user_updating)
+                return (False, errors)
+        return (False, errors)
+
 
 class Grubber(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
