@@ -28,6 +28,7 @@ def register(request):
         for error in response:
             messages.error(request, error)
         return redirect('users:index')
+    request.session['id'] = response
     return redirect("users:main_profile")
 
 def update_name(request):

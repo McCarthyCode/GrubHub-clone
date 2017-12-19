@@ -47,11 +47,10 @@ class GrubberManager(models.Manager):
                     email=postData['email'],
                     password=postData['password']
                 )
-                grubber = Grubber.objects.create()
-                grubber.first_name = postData['first_name']
-                grubber.last_name = postData['last_name']
-                grubber.save()
-                return (True, user)
+                user.first_name = postData['first_name']
+                user.last_name = postData['last_name']
+                user.save()
+                return (True, user.id)
             elif action == 'login':
                 #compares user password with posted password
                 correct_pw = email_exists[0].check_password(
