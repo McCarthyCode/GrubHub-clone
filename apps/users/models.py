@@ -51,7 +51,7 @@ class GrubberManager(models.Manager):
                     return (False, errors)
                 #otherwise bcrypt password and create user
                 user = User.objects.create_user(
-                    username=postData['username'],
+                    username=postData['email'],
                     email_address=postData['email'],
                     password=postData['password']
                 )
@@ -118,8 +118,8 @@ class GrubberManager(models.Manager):
                     user_updating.save()
                     return (True, user_updating)
             elif action == 'update_password':
-                if len(postData['new_email']) < 1:
-                    errors.append("Please enter an email!")
+                if len(postData['new_password']) < 1:
+                    errors.append("Please enter a password")
                 if len(postData['conf_email']) < 1:
                     errors.append("Please enter an email")
                 if not EMAIL_REGEX.match(postData['new_email']):

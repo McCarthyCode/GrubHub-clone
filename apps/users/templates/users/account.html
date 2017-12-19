@@ -46,12 +46,12 @@
     <form action="update_password" method="post">
         {% csrf_token %}
         <input type="hidden" name="user_id" value={{user.id}}>
-        <label for="current_password">Current password</label>
-        <input type="current_password" name="current_password">
-        <label for="password">New password</label>
-        <input type="password" name="password">
+        <label for="new_password">New password</label>
+        <input type="password" name="new_password">
         <label for="password">Confirm password</label>
         <input type="password" name="password">
+        <label for="current_password">Current password</label>
+        <input type="current_password" name="current_password">
         <input type="submit" value="Update password">
     </form>
     <br>
