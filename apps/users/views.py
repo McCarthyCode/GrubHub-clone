@@ -26,13 +26,16 @@ def register(request):
     valid, response = gm.login_reg_validator(request.POST, 'register')
     if not valid:
         for error in response:
-            messages.error(request.error)
+            messages.error(request, error)
         return redirect('users:index')
     return redirect("users:profile")
 
 def profile(request):
-    return HttpResponse('Placholder: Profile Page')
+    return HttpResponse('Placeholder: Profile Page')
 
 def reset(request):
     request.session.clear()
     return redirect('users:index')
+
+def address(request):
+    return render(request, 'users/address.html')
