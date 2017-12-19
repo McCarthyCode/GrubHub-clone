@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from .models import Grubber, GrubberManager, UserAddress
 
 def index(request):
+    if 'id' in request.session:
+        return redirect('user:main_profile')
     return render(request, 'users/index.html')
 
 def login(request):
