@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Grubber, GrubberManager
+from .models import Grubber, GrubberManager, UserAddress
 
 def index(request):
     return render(request, 'users/index.html')
@@ -30,8 +30,32 @@ def register(request):
         return redirect('users:index')
     return redirect("users:profile")
 
-def profile(request):
-    return HttpResponse('Placeholder: Profile Page')
+def show_profile(request):
+    context = {
+        'user': User.objects.get(id=request.session['id'])
+    }
+    return render(request, "users/lets-eat.html", context)
+
+def show_account(request):
+    context = {
+        'user': User.objects.get(id=request.session['id'])
+    }
+    return render(request, "users/account.html", context)
+
+def show_addresses(request):
+    user = User.objects.get(id=request.session['id'])
+    context = {
+        'addresses': user.addresses.all()
+    }
+    return render(request, "users/addresses.html", context)
+
+def add_address(request):
+    valid, response = UserAddress.objects.address_validator(request.POST)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+        return redirect('users:user_addresses')
+    return redirect('users:user_addresses')
 
 def reset(request):
     request.session.clear()

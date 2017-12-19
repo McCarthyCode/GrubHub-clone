@@ -78,12 +78,18 @@ class GrubberManager(models.Manager):
                 if correct_pw:
                     user_id = email_exists[0].id
                     return (True, user_id)
+            elif action == 'update':
+                user=email_exists[0]
+                user.first_name = postData['first_name']
+                user.last_name = postData['last_name']
         return (False, errors)
 
 class Grubber(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_rest_owner = models.BooleanField(default=False, blank=True)
+    objects = GrubberManager()
 
-class AddressManager(models.Model):
+class AddressManager(models.Manager):
     def address_validator(self, postData):
         errors = []
         if len(postData['address_1']) < 1:
@@ -97,13 +103,13 @@ class AddressManager(models.Model):
         if len(postData['phone']) < 1:
             errors.append("Please enter a phone number")
 
-        address_exists = Address.objects.filter(address_1=postData['address_1'])
+        address_exists = UserAddress.objects.filter(address_1=postData['address_1'])
 
         if not errors:
             user = User.objects.get(id=postData['user_id'])
             if len(address_exists) == 0:
                 errors.append("This address exists!")
-            Address.objects.create(
+            UserAddress.objects.create(
                 address_1=postData['address_1'],
                 address_2=postData['address_2'],
                 city=postData['city'],
@@ -116,13 +122,18 @@ class AddressManager(models.Model):
                 users_addresses=user,
                 #to be pulled from hidden input in template
             )
-            all_addresses = Address.objects.filter(id=user.id)
+            all_addresses = UserAddress.objects.filter(id=user.id)
             return (True, all_addresses)
 
         return (False, errors)
 
+    # def updated_address(self, postData):
+        
 
-class Address(models.Model):
+    # def remove_address(self, postData):
+
+
+class UserAddress(models.Model):
     address_1 = models.CharField(max_length=255)
     address_2 = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=40)
@@ -135,5 +146,6 @@ class Address(models.Model):
     address_label = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = AddressManager()
 
 #payment info model to be added as unique model - on to many relationship
