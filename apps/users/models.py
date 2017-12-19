@@ -100,7 +100,7 @@ class AddressManager(models.Manager):
             errors.append("Please enter a state!")
         if len(postData['zip_code']) < 1:
             errors.append("Please enter a zip code!")
-        if len(postData['phone']) < 1:
+        if len(postData['phone_number']) < 1:
             errors.append("Please enter a phone number")
 
         address_exists = UserAddress.objects.filter(address_1=postData['address_1'])
@@ -127,11 +127,34 @@ class AddressManager(models.Manager):
 
         return (False, errors)
 
-    # def updated_address(self, postData):
-        
+    def updated_address(self, postData):
+        errors = []
+        if len(postData['address_1']) < 1:
+            errors.append("Please enter an address!")
+        if len(postData['city']) < 1:
+            errors.append("Please enter a city!")
+        if len(postData['state']) < 1:
+            errors.append("Please enter a state!")
+        if len(postData['zip_code']) < 1:
+            errors.append("Please enter a zip code!")
+        if len(postData['phone_number']) < 1:
+            errors.append("Please enter a phone number")
 
-    # def remove_address(self, postData):
+        address_updating = UserAddress.objects.get(id=postData['address_id'])
 
+        if not errors:
+            address_updating.address_1 = postData['address_1']
+            address_updating.address_2 = postData['address_2']
+            address_updating.city = postData['city']
+            address_updating.state = postData['state']
+            address_updating.zip_code = postData['zip_code']
+            address_updating.phone_number = postData['phone_number']
+            address_updating.cross_street = postData['cross_street']
+            address_updating.delivery_instructions = postData['delivery_instructions']
+            address_updating.address_label = postData['address_label']
+            address_updating.save()
+            return (True, address_updating)
+        return (False, errors)
 
 class UserAddress(models.Model):
     address_1 = models.CharField(max_length=255)

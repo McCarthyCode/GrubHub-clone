@@ -45,6 +45,7 @@ def show_account(request):
 def show_addresses(request):
     user = User.objects.get(id=request.session['id'])
     context = {
+        'user': user,
         'addresses': user.addresses.all()
     }
     return render(request, "users/addresses.html", context)
@@ -55,6 +56,16 @@ def add_address(request):
         for error in response:
             messages.error(request, error)
         return redirect('users:user_addresses')
+    return redirect('users:user_addresses')
+
+def destroy_address(request, address_id):
+    address_deleting = UserAddress.objects.get(id=address_id)
+    address_deleting.delete()
+    return redirect('users:user_addresses')
+
+def update_address(request):
+    response = UserAddress.objects.updated_address(request.POST)
+    print response
     return redirect('users:user_addresses')
 
 def reset(request):
