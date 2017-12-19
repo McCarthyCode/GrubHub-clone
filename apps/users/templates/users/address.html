@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Address Book</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -36,7 +40,86 @@
                 </div>
             </div>
         </div>
-        
     </nav>
+    <div class="side-pane col-xs-3">
+        <h2>Your Account</h2>
+        <ul>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                Address and Phone
+            </li>
+            <li>
+                <a href="#">Payments</a>
+            </li>
+            <li>
+                <a href="#">Gift cards</a>
+            </li>
+            <li>
+                <a href="#">Orders</a>
+            </li>
+            <li>
+                <a href="#">Saved restaurants</a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-pane col-xs-9">
+        <div class="address-header">
+            <h3>Addresses</h3>
+            <a class="modal-trigger" data-toggle="modal" data-target="#addAddressModal">
+                + Add a new address
+            </a>
+        </div>
+        <div class="addresses">
+            <div class="address-card">
+                <div class="address">
+                    <h5>Work</h5>
+                    <p>213 W Institute Pl , 610</p>
+                </div>
+                <ul class="edit">
+                    <li>
+                        <a href="#">Delete</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="address-card">
+                <div class="address">
+                    <h5>Home</h5>
+                    <p>1201 W Chase Ave , 1B</p>
+                </div>
+                <ul class="edit">
+                    <li>
+                        <a href="#">Delete</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class-"modal-title">Add New Address</h3>
+                </div>
+                <div class="modal-body">
+                    form goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

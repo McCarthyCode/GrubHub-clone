@@ -3,9 +3,15 @@
 * {
     font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
+html, body {
+    background-color: #eeeeef !important;
+    height: 100%;
+    margin: 0;
+}
 nav {
     background-color: #f63440;
     border-radius: 0 !important;
+    margin: 0 !important;
 }
 .navbar-brand {
     text-transform: uppercase;
@@ -57,12 +63,72 @@ input[type="text"]:focus {
 .icon {
     font-size: 23px;
 }
-body {
-    background-color: #eeeeee !important;
+.side-pane,
+.main-pane {
+    padding: 0 12px;
 }
-.form-control {
-    max-width: 330px;
+.side-pane {
+    border-right: 1px solid #bfbfbf;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
 }
-.mt-15px {
-    margin-top: 15px;
+.side-pane h2 {
+    font-family: "Allerta", Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+    font-size: 24px;
+    margin: 30px 10px 5px 10px;
+    padding: 0 0 5px 0;
+}
+.side-pane ul {
+    list-style: none;
+    margin: 0 10px;
+    padding: 0;
+}
+.side-pane li {
+    font-weight: bold;
+    padding: 8px 0;
+}
+a {
+    text-decoration: none;
+    color: #0070eb;
+}
+.address-header {
+    display: flex;
+    justify-content: space-between;
+}
+.address-header h3 {
+    font-family: "Allerta", Arial, Helvetica, sans-serif !important;
+    font-weight: bold;    
+}
+.address-header a {
+    margin-top: 24px;
+}
+.addresses {
+    margin-bottom: 12px;
+}
+.address-card {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #eeeeef;
+    padding: 16px 12px;
+    background-color: white;
+}
+.address h5 {
+    margin: 0px 0;
+}
+.address p {
+    margin: 0;
+    color: #bfbfbf;
+}
+.address-card ul {
+    list-style: none;
+}
+.address-card li {
+    display: inline-block;
+    padding: 5px;
+}
+.modal-trigger {
+    cursor: pointer;
 }
