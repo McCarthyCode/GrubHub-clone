@@ -71,3 +71,6 @@ def update_address(request):
 def reset(request):
     request.session.clear()
     return redirect('users:index')
+
+def address(request):
+    return render(request, 'users/address.html')

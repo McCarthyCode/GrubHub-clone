@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^account/update_address$', views.update_address, name='add_address'),
     url(r'^account/(?P<address_id>\d+)/destroy$', views.destroy_address),
     url(r'^reset$', views.reset, name='reset'),
+    url(r'^profile/address$', views.address, name='address'),
 ]
