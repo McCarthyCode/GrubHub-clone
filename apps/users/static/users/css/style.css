@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
-@import url('https://fonts.googleapis.com/css?family=Allerta');
-* {
-    font-family: "Poppins", Arial, Helvetica, sans-serif;
+@font-face {
+    font-family: 'graphik';
+    src: url('https://assets.grubhub.com/fonts/2ad16a9135fa759791353a358e78c429.woff') format('woff');
 }
+/* * {
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+} */
 html, body {
     background-color: #eeeeef !important;
     height: 100%;
@@ -14,6 +17,7 @@ nav {
     margin: 0 !important;
 }
 .navbar-brand {
+    font-family: "graphik", Arial, Helvetica, sans-serif !important;
     text-transform: uppercase;
     font-size: 23px !important;
     color: white;
@@ -68,13 +72,13 @@ nav {
     padding: 0 12px;
 }
 .side-pane {
+    font-family: "graphik", Arial, Helvetica, sans-serif !important;
     border-right: 1px solid #bfbfbf;
     display: flex;
     flex-flow: column;
     height: 100%;
 }
 .side-pane h2 {
-    font-family: "Allerta", Arial, Helvetica, sans-serif !important;
     font-weight: bold !important;
     font-size: 24px;
     margin: 30px 10px 5px 10px;
@@ -89,16 +93,22 @@ nav {
     font-weight: bold;
     padding: 8px 0;
 }
-a {
+.side-pane a,
+.main-pane a {
     text-decoration: none;
-    color: #0070eb;
+    color: #0074e4 !important;
+}
+.side-pane a:hover,
+.main-pane a:hover {
+    color: #005cb2 !important;
 }
 .address-header {
     display: flex;
     justify-content: space-between;
 }
-.address-header h3 {
-    font-family: "Allerta", Arial, Helvetica, sans-serif !important;
+.address-header h3,
+.modal h3 {
+    font-family: "graphik", Arial, Helvetica, sans-serif !important;
     font-weight: bold;    
 }
 .address-header a {
@@ -132,9 +142,12 @@ a {
 .modal-trigger {
     cursor: pointer;
 }
-.form-control {
-    max-width: 330px;
+.modal-body label span {
+    font-weight: normal;
 }
+/* .form-control {
+    max-width: 330px;
+} */
 .mt-15 {
     margin-top: 15px !important;
 }
