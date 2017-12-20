@@ -19,7 +19,7 @@ def login(request):
             messages.error(request, error)
         return redirect('users:index')
     request.session['id'] = response
-    return redirect("users:profile")
+    return redirect("users:lets_eat")
 
 def register(request):
     gm = GrubberManager()
@@ -29,7 +29,7 @@ def register(request):
             messages.error(request, error)
         return redirect('users:index')
     request.session['id'] = response
-    return redirect("users:profile")
+    return redirect("users:lets_eat")
 
 def show_profile(request):
     context = {

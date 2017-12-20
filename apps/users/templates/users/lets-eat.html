@@ -5,14 +5,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login and Registration</title>
+    <title>Food Delivery | Restaurant Takeout | Order Food Online | Grubhub</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 </head>
 <body>
-    {{user.first_name}}
-    <a href="account">view your account</a>
+    <nav class="navbar navbar-toggleable-md navbar-dark navbar-fixed-top bg-faded">
+        <div class="container hidden-phone">
+            <div class="row">
+                <div class="col-xs-2">
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">GrubHub</a>
+                </div>
+                <form action="#">
+                    <div class="input col-xs-4 bl">
+                        <input type="text" placeholder="Where are you? (Required)">
+                        <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+                    </div>
+                    <div class="input col-xs-3 bl">
+                        <input type="text" placeholder="e.g. Sushi, pad thai, Bob's Pizza">
+                        <i class="glyphicon glyphicon-search form-control-feedback">
+                        </i>
+                    </div>
+                </form>
+                <div class="col-xs-3 links bl">
+                    <a class="link" href="#">Contact Us</a>
+                    <a class="icon" href="{% url 'users:main_profile' %}"><span class="glyphicon glyphicon-user"></span></a>
+                    <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div>
+            <h3>Good morning, {{user.first_name}}.</h3>
+            <p>I want <a href="#">Pickup for Today, ASAP</a></p>
+        </div>
+        <button>View all restaurants</button>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <img src="{% static 'users/img/most-ordered.png' %}" alt="Most ordered in your area">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 mt-15">
+                <img src="{% static 'users/img/recent-orders.png' %}" alt="Recent orders">
+            </div>
+        </div><div class="row">
+            <div class="col-xs-12 mt-15">
+                <img src="{% static 'users/img/closest-to-you.png' %}" alt="Closest to you">
+            </div>
+        </div>
+    </div>
+    <footer class="mt-15">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3">
+                    <h4>Get to know us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">About Grubhub</a>
+                        </li>
+                        <li>
+                            <a href="#">Our apps</a>
+                        </li>
+                        <li>
+                            <a href="#">Our blog</a>
+                        </li>
+                        <li>
+                            <a href="#">Careers</a>
+                        </li>
+                        <li>
+                            <a href="#">Investor relations</a>
+                        </li>
+                        <li>
+                            <a href="#">News</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Useful links</h4>
+                    <ul>
+                        <li>
+                            <a href="#">Gift cards</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="#">Contact us</a>
+                        </li>
+                        <li>
+                            <a href="#">Grubhub for Alexa</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Connect with us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">The Crave</a>
+                        </li>
+                        <li>
+                            <a href="#">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="#">Instagram</a>
+                        </li>
+                        <li>
+                            <a href="#">YouTube</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Partner with us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">For restaurants</a>
+                        </li>
+                        <li>
+                            <a href="#">For drivers</a>
+                        </li>
+                        <li>
+                            <a href="#">For corporate accounts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row legal">
+                <div class="col-xs-8">
+                    <span>&copy; 2017 Grubhub All rights reserved.</span>
+                </div>
+                <div class="col-xs-4">
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

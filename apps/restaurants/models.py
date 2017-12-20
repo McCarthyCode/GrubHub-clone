@@ -61,7 +61,7 @@ class RestaurantAddressManager(models.Manager):
 
         return (False, errors)
 
-class MenuManager(models.Manager):
+# class MenuManager(models.Manager):
     
 
 class Restaurant(models.Model):
