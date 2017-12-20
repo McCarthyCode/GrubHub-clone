@@ -61,6 +61,9 @@ class RestaurantAddressManager(models.Manager):
 
         return (False, errors)
 
+class MenuManager(models.Manager):
+    
+
 class Restaurant(models.Model):
     rest_name = models.CharField(max_length=255)
     rest_owner = models.ForeignKey(Grubber, name="owned_by")
@@ -85,63 +88,13 @@ class RestaurantAddress(models.Model):
     objects = RestaurantAddressManager()
 
 class RestaurantCategory(models.Model):
-    restaurant_category_choices = {
-        ('Alcohol', 'Alcohol'),
-        ('American', 'American'),
-        ('Asian', 'Asian'),
-        ('BBQ', 'BBQ'),
-        ('Bakery', 'Bakery'),
-        ('Chicken', 'Chicken'),
-        ('Chinese', 'Chinese'),
-        ('CoffeeTea', 'Coffee and Tea'),
-        ('Dessert', 'Dessert'),
-        ('Eclectic', 'Eclectic'),
-        ('GlutenFree', 'Gluten-Free'),
-        ('Grill', 'Grill'),
-        ('Halal', 'Halal'),
-        ('Hamburgers', 'Hamburgers'),
-        ('Healthy', 'Healthy'),
-        ('HotDogs', 'Hot Dogs'),
-        ('IcCream', 'Ice Cream'),
-        ('Indian', 'Indian'),
-        ('Italian', 'Italian'),
-        ('Japanese', 'Japanese'),
-        ('LatinAmerican', 'Latin American'),
-        ('LunchSpecials', 'Lunch Specials'),
-        ('Mediterranean', 'Mediterranean'),
-        ('Mexican', 'Mexican'),
-        ('MiddlEastern', 'Middle Eastern'),
-        ('NeAmerican', 'New American'),
-        ('Noodles', 'Noodles'),
-        ('Pakistani', 'Pakistani'),
-        ('Pasta', 'Pasta'),
-        ('Pizza', 'Pizza'),
-        ('PubFood', 'Pub Food'),
-        ('Ribs', 'Ribs'),
-        ('Salads', 'Salads'),
-        ('Sandwiches', 'Sandwiches'),
-        ('Seafood', 'Seafood'),
-        ('SmoothiesJuices', 'Smoothies and Juices'),
-        ('Soup', 'Soup'),
-        ('Southern', 'Southern'),
-        ('Spanish', 'Spanish'),
-        ('Steak', 'Steak'),
-        ('Subs', 'Subs'),
-        ('Sushi', 'Sushi'),
-        ('Szechwan', 'Szechwan'),
-        ('Tapas', 'Tapas'),
-        ('Thai', 'Thai'),
-        ('Vegan', 'Vegan'),
-        ('Vegetarian', 'Vegetarian'),
-        ('Vietnamese', 'Vietnamese'),
-        ('Wings', 'Wings'),
-        ('Wraps', 'Wraps'),
-    }
-    restaurant_categories = models.CharField(max_length=100, choices=restaurant_category_choices)
+    restaurant_categories = models.CharField(max_length=100)
     #category_img = 
 
 class Menu(models.Model):
     menu_item = models.CharField(max_length=50)
     desc = models.CharField(max_length=500)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    restaurant = models.ForeignKey(Restaurant, name="menu")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

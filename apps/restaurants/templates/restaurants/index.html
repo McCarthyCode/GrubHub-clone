@@ -1,5 +1,19 @@
 {% for restaurant in restaurants %}
     {{restaurant.rest_name}}
-    {{restaurant.locations}}
+    
+
+    {% for location in locations %}
+
+        {{location.address_1}}
+    
+    {% endfor %}
+    {{restaurant.category.first.restaurant_categories}}
+{% endfor %}
+<br>
+
+<br>
+{% for category in categories %}
+
+    {{category.all}}
     
 {% endfor %}
