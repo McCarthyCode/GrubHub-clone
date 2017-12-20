@@ -1,36 +1,119 @@
-<h2>Restaurants owned by {{user.first_name}}</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Restaurants</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script> {% load static %}
+    <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-faded">
+        <div class="container hidden-phone">
+            <div class="row">
+                <div class="col-xs-2">
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">
+                        <img src="{% static 'users/img/logo.svg' %}" alt="GrubHub" width="100px">
+                    </a>
+                </div>
+                <form action="#">
+                    <div class="input col-xs-4 bl">
+                        <input type="text" placeholder="Where are you? (Required)">
+                        <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+                    </div>
+                    <div class="input col-xs-3 bl">
+                        <input type="text" placeholder="e.g. Sushi, pad thai, Bob's Pizza">
+                        <i class="glyphicon glyphicon-search form-control-feedback">
+                        </i>
+                    </div>
+                </form>
+                <div class="col-xs-3 links bl">
+                    <a class="link" href="#">Contact Us</a>
+                    <a class="icon" href="{% url 'users:main_profile' %}"><span class="glyphicon glyphicon-user"></span></a>
+                    <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="side-pane col-xs-3">
+        <h2>Your Account</h2>
+        <ul>
+            <li>
+                <a href="account">Profile</a>
+            </li>
+            <li>
+                <a href="account/address">Address and Phone</a>
+            </li>
+            <li>
+                <a href="#">Payments</a>
+            </li>
+            <li>
+                <a href="#">Gift cards</a>
+            </li>
+            <li>
+                <a href="#">Orders</a>
+            </li>
+            <li>
+                <a href="#">Saved restaurants</a>
+            </li>
+            <li>
+                <span>My restaurants</span>
+            </li>
+        </ul>
+    </div>
+    <div class="main-pane col-xs-9">
+        <div class="restaurant-header">
+            <h3>Restaurants owned by {{user.first_name}}</h3>
+            <a class="modal-trigger" data-toggle="modal" data-target="#addRestaurantModal">
+                <span>+ Add restaurant</span>
+            </a>
+        </div>
+        <div class="restaurants">
+        {% for restaurant in restaurants %}
+            <div class="restaurant-card">
+                <div class="restaurant">
+                    <a href="restaurant/{{restaurant.id}}">{{restaurant.rest_name}}</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="modal fade" id="addRestaurantModal" tabindex="-1" role="dialog" aria-labelledby="addRestaurantModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title">Add a Restaurant</h3>
+                </div>
+                <form action="{% url 'restaurants:add_restaurant' %}" method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value={{user.id}}>
+                        <label for="rest_name">Restaurant Name</label><br>
+                        <input type="text" name="rest_name" class="form-control"><br>
+                        {% for category in categories %}
+                        <input type="checkbox" id="{{category.id}}" name="category" value="{{category.id}}">
+                        <label for="{{category.id}}">{{category.restaurant_categories}}</label>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Add restaurant">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
-{% for restaurant in restaurants %}
-    <a href="restaurant/{{restaurant.id}}">{{restaurant.rest_name}}</a><br>
-    
 
-{% endfor %}
-<br>
 
-<br>
-<h3>Add a restaurant</h3>
-<form action="restaurant/add_restaurant" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value={{user.id}}>
-    <label for="rest_name">Restaurant Name</label>
-    <input type="text" name="rest_name"><br>
-    {% for category in categories %}
-
-        <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}}
-    
-    {% endfor %}
-    <br>
-    <input type="submit" value="Submit">
-</form>
-<h3>Update a restaurant</h3>
-<form action="restaurant/update_restaurant" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value={{user.id}}>
-    <label for="rest_name">Restaurant Name</label>
-    <input type="text" name="rest_name">
-    <br> {% for category in categories %}
-
-    <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}} {% endfor %}
-    <br>
-    <input type="submit" value="Submit">
-</form>

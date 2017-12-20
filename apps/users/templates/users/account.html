@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script> {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -16,7 +18,9 @@
         <div class="container hidden-phone">
             <div class="row">
                 <div class="col-xs-2">
-                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">GrubHub</a>
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">
+                        <img src="{% static 'users/img/logo.svg' %}" alt="GrubHub" width="100px">
+                    </a>
                 </div>
                 <form action="#">
                     <div class="input col-xs-4 bl">
@@ -58,6 +62,9 @@
             <li>
                 <a href="#">Saved restaurants</a>
             </li>
+            <li>
+                <a href="{% url 'restaurants:restaurant_home' %}">My restaurants</a>
+            </li>
         </ul>
     </div>
     <div class="main-pane col-xs-9">
@@ -92,7 +99,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h3 class- "modal-title">Edit Name</h3>
+                    <h3 class="modal-title">Edit Name</h3>
                 </div>
                 <form action="account/update_name" method="post">
                     <div class="modal-body">
@@ -130,7 +137,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h3 class- "modal-title">Edit Email</h3>
+                    <h3 class="modal-title">Edit Email</h3>
                 </div>
                 <form action="account/update_email" method="post">
                     <div class="modal-body">
@@ -168,7 +175,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h3 class- "modal-title">Edit Password</h3>
+                    <h3 class="modal-title">Edit Password</h3>
                 </div>
                 <form action="account/update_password" method="post">
                     <div class="modal-body">
