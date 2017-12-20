@@ -114,23 +114,44 @@ nav {
 .address-header a {
     margin-top: 24px;
 }
-.addresses {
+.addresses,
+.accounts {
     margin-bottom: 12px;
 }
-.address-card {
+.accounts {
+    margin-top: 35px;
+}
+.address-card,
+.account-card {
     display: flex;
     justify-content: space-between;
     width: 100%;
     border-bottom: 1px solid #eeeeef;
-    padding: 16px 12px;
     background-color: white;
 }
-.address h5 {
+.address-card {
+    padding: 16px 12px;
+}
+.account-card {
+    padding: 30px;
+}
+.address h5,
+.account h4 {
     margin: 0px 0;
 }
+.account h4 {
+    font-family: "graphik", Arial, Helvetica, sans-serif !important;
+    font-weight: bold;
+}
 .address p {
-    margin: 0;
     color: #bfbfbf;
+    margin: 0;
+}
+.account p {
+    margin: 10px 0 0 0;
+}
+.account-card a {
+    margin-top: 10px;
 }
 .address-card ul {
     list-style: none;
