@@ -80,6 +80,34 @@ class RestaurantAddressManager(models.Manager):
 
         return (False, errors)
 
+    def update_location(self, postData):
+        errors = []
+        if len(postData['address_1']) < 1:
+            errors.append("Please enter an address!")
+        if len(postData['city']) < 1:
+            errors.append("Please enter a city!")
+        if len(postData['state']) < 1:
+            errors.append("Please enter a state!")
+        if len(postData['zip_code']) < 1:
+            errors.append("Please enter a zip code!")
+        if len(postData['phone_number']) < 1:
+            errors.append("Please enter a phone number")
+
+        address_updating = RestaurantAddress.objects.get(id=postData['location_id'])
+
+        if not errors:
+            address_updating.address_1 = postData['address_1']
+            address_updating.address_2 = postData['address_2']
+            address_updating.city = postData['city']
+            address_updating.state = postData['state']
+            address_updating.zip_code = postData['zip_code']
+            address_updating.phone_number = postData['phone_number']
+            address_updating.address_label = postData['address_label']
+            address_updating.save()
+            return (True, address_updating)
+        return (False, errors)
+
+
 # class MenuManager(models.Manager):
 
 class Restaurant(models.Model):

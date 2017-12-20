@@ -10,11 +10,9 @@ from ..users.models import User
 def show_restaurants(request):
     owner = User.objects.get(id=request.session['id'])
     u_rest = Restaurant.objects.filter(owned_by=owner)
-    # r_cat = RestaurantCategory.objects.filter(restaurant_id=u_rest)
     categories = RestaurantCategory.objects.all()
     context = {
         'restaurants': u_rest,
-        # 'locations': locations,
         'categories': categories,
         'user': owner
     }
@@ -64,3 +62,18 @@ def add_location(request):
         return redirect('restaurants:rest_profile', rest_id)
     print response.values()
     return redirect('restaurants:rest_profile', rest_id)
+
+def update_location(request):
+    rest_id = request.session['rest_id']
+    valid, response = RestaurantAddress.objects.update_location(request.POST)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+        return redirect('restaurants:rest_profile', rest_id)
+    return redirect('restaurants:rest_profile', rest_id)
+
+def destroy_location(request, rest_id):
+    #need to delete address as well
+    location_deleting = Restaurant.location.get(id=rest_id)
+    location_deleting.delete()
+    return redirect('restaurants:restaurant_home')

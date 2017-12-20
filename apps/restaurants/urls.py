@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'update_restaurant$', views.update_restaurant),
     url(r'delete_restaurant$', views.destroy_restaurant),
     url(r'add_location$', views.add_location),
+    url(r'update_location$', views.update_location),
+    url(r'delete_location$', views.destroy_location),
 ]
