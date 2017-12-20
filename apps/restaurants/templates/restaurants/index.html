@@ -1,19 +1,54 @@
+<h2>Restaurants owned by {{user.first_name}}</h2>
+
 {% for restaurant in restaurants %}
-    {{restaurant.rest_name}}
+    <a href="restaurant/{{restaurant.id}}">{{restaurant.rest_name}}</a><br>
     
 
-    {% for location in locations %}
+{% endfor %}
+<br>
 
-        {{location.address_1}}
+<br>
+<h3>Add a restaurant</h3>
+<form action="restaurant/add_restaurant" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="user_id" value={{user.id}}>
+    <label for="rest_name">Restaurant Name</label>
+    <input type="text" name="rest_name"><br>
+    {% for category in categories %}
+
+        <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}}
     
     {% endfor %}
-    {{restaurant.category.first.restaurant_categories}}
-{% endfor %}
-<br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<h3>Add a location</h3>
+<form action="restaurant/add_location" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="rest_id" value={{restaurants.id}}>
+    <label for="address_1">Address</label>
+    <input type="text" name="address_1" value={{address.address_1}}>
+    <label for="address_2">Apt#/Suite (optional)</label>
+    <input type="text" name="address_2" value={{address.address_2}}>
+    <label for="city">City (required)</label>
+    <input type="text" name="city" value={{address.city}}>
+    <label for="state">State (required)</label>
+    <input type="text" name="state" value={{address.state}}>
+    <label for="zip_code">Zip (required)</label>
+    <input type="text" name="zip_code" value={{address.zip_code}}>
+    <label for="phone_number">Phone (required)</label>
+    <input type="text" name="phone_number" value={{address.phone_number}}>
+    <input type="submit" value="Submit">
+</form>
+<h3>Update a restaurant</h3>
+<form action="restaurant/update_restaurant" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="user_id" value={{user.id}}>
+    <label for="rest_name">Restaurant Name</label>
+    <input type="text" name="rest_name">
+    <br> {% for category in categories %}
 
-<br>
-{% for category in categories %}
-
-    {{category.all}}
-    
-{% endfor %}
+    <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}} {% endfor %}
+    <br>
+    <input type="submit" value="Submit">
+</form>

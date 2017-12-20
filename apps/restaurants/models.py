@@ -7,7 +7,7 @@ from ..users.models import Grubber
 from datetime import datetime
 # Create your models here.
 class RestaurantManager(models.Manager):
-    def create_restaurant(self, postData):
+    def create_restaurant(self, postData, categories):
     #pull in user info using hidden input??
         owner = User.objects.get(id=postData['user_id'])
         errors = []
@@ -15,10 +15,12 @@ class RestaurantManager(models.Manager):
             errors.append("Please enter a Restaurant Name")
         
         if not errors:
-            Restaurant.objects.create(
+            new_r = Restaurant.objects.create(
                 rest_name = postData['rest_name'],
-                owned_by = owner
+                owned_by = owner,
             )
+            for cat in categories:
+                new_r.category.add(cat)
             all_restaurants = Restaurant.objects.filter(owned_by=owner.id)
             return (True, all_restaurants)
         return (False, errors)
@@ -62,11 +64,10 @@ class RestaurantAddressManager(models.Manager):
         return (False, errors)
 
 # class MenuManager(models.Manager):
-    
 
 class Restaurant(models.Model):
     rest_name = models.CharField(max_length=255)
-    rest_owner = models.ForeignKey(Grubber, name="owned_by")
+    rest_owner = models.ForeignKey(User, name="owned_by")
     #profile_photo
     #cover_photo
     category = models.ManyToManyField('RestaurantCategory')
@@ -91,10 +92,12 @@ class RestaurantCategory(models.Model):
     restaurant_categories = models.CharField(max_length=100)
     #category_img = 
 
-class Menu(models.Model):
+class MenuItem(models.Model):
     menu_item = models.CharField(max_length=50)
     desc = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     restaurant = models.ForeignKey(Restaurant, name="menu")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+# Menu class
