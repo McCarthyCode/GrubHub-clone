@@ -22,15 +22,4 @@
     <br>
     <input type="submit" value="Submit">
 </form>
-<h3>Update a restaurant</h3>
-<form action="restaurant/update_restaurant" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value={{user.id}}>
-    <label for="rest_name">Restaurant Name</label>
-    <input type="text" name="rest_name">
-    <br> {% for category in categories %}
 
-    <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}} {% endfor %}
-    <br>
-    <input type="submit" value="Submit">
-</form>
