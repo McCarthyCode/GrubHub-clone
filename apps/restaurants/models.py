@@ -45,7 +45,7 @@ class RestaurantAddressManager(models.Manager):
 
         if not errors:
             restaurant = Restaurant.objects.get(id=postData['rest_id'])
-            if not address_exists:
+            if address_exists:
                 errors.append("This address exists!")
             RestaurantAddress.objects.create(
                 address_1=postData['address_1'],
@@ -55,10 +55,10 @@ class RestaurantAddressManager(models.Manager):
                 zip_code=postData['zip_code'],
                 phone_number=postData['phone_number'],
                 address_label=postData['address_label'],
-                locations=restaurant,
+                rest_addresses=restaurant,
                 #to be pulled from hidden input in template
             )
-            all_addresses = RestaurantAddress.objects.filter(id=restaurant.id)
+            all_addresses = RestaurantAddress.objects.filter(rest_addresses_id=restaurant.id)
             return (True, all_addresses)
 
         return (False, errors)
