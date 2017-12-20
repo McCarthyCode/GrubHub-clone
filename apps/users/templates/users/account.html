@@ -5,56 +5,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
-    {% load static %}
+    <title>Profile</title><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script> {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 </head>
 <body>
-    <h2>Name</h2>
-    <p>{{user.first_name}} {{user.last_name}}</p>
-    <a href="#">Change</a>
-    <form action="account/update_name" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value={{user.id}}>
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" value={{user.first_name}}>
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" value={{user.last_name}}>
-        <label for="current_password">Current Password</label>
-        <input type="password" name="current_password">
-        <input type="submit" value="Update Name">
-    </form>
-    <h2>Email</h2>
-    <p>{{user.email}}</p>
-    <a href="#">Change</a>
-    <form action="account/update_email" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value={{user.id}}>
-        <label for="new_email">New Email</label>
-        <input type="text" name="new_email">
-        <label for="conf_email">Confirm Email</label>
-        <input type="text" name="conf_email">
-        <label for="current_password">Current Password</label>
-        <input type="password" name="current_password">
-        <input type="submit" value="Update email">
-    </form>
-    <h2>Password</h2>
-    <p>**********</p>
-    <a href="#">Change</a>
-    <form action="account/update_password" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="user_id" value={{user.id}}>
-        <label for="new_password">New password</label>
-        <input type="password" name="new_password">
-        <label for="password">Confirm password</label>
-        <input type="password" name="confirm_password">
-        <label for="current_password">Current password</label>
-        <input type="password" name="current_password">
-        <input type="submit" value="Update password">
-    </form>
-    <br>
-    <a href="lets-eat">Home</a>
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-faded">
+        <div class="container hidden-phone">
+            <div class="row">
+                <div class="col-xs-2">
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">GrubHub</a>
+                </div>
+                <form action="#">
+                    <div class="input col-xs-4 bl">
+                        <input type="text" placeholder="Where are you? (Required)">
+                        <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+                    </div>
+                    <div class="input col-xs-3 bl">
+                        <input type="text" placeholder="e.g. Sushi, pad thai, Bob's Pizza">
+                        <i class="glyphicon glyphicon-search form-control-feedback">
+                        </i>
+                    </div>
+                </form>
+                <div class="col-xs-3 links bl">
+                    <a class="link" href="#">Contact Us</a>
+                    <a class="icon" href="{% url 'users:main_profile' %}"><span class="glyphicon glyphicon-user"></span></a>
+                    <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="side-pane col-xs-3">
+        <h2>Your Account</h2>
+        <ul>
+            <li>
+                <span>Profile</span>
+            </li>
+            <li>
+                <a href="account/address">Address and Phone</a>
+            </li>
+            <li>
+                <a href="#">Payments</a>
+            </li>
+            <li>
+                <a href="#">Gift cards</a>
+            </li>
+            <li>
+                <a href="#">Orders</a>
+            </li>
+            <li>
+                <a href="#">Saved restaurants</a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-pane col-xs-9">
+        <div class="accounts">
+            <div class="account-card">
+                <div class="account">
+                    <h4>Name</h4>
+                    <p>{{user.first_name}} {{user.last_name}}</p>
+                </div>
+                <a class="modal-trigger" data-toggle="modal" data-target="#changeNameModal">Change</a>
+            </div>
+            <div class="account-card">
+                <div class="account">
+                    <h4>Email</h4>
+                    <p>{{user.email}}</p>
+                </div>
+                <a class="modal-trigger" data-toggle="modal" data-target="#changeEmailModal">Change</a>
+            </div>
+            <div class="account-card">
+                <div class="account">
+                    <h4>Password</h4>
+                    <p>**********</p>
+                </div>
+                <a class="modal-trigger" data-toggle="modal" data-target="#changePasswordModal">Change</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="changeNameModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class- "modal-title">Edit Name</h3>
+                </div>
+                <form action="account/update_name" method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value={{user.id}}>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="first_name">First Name</label><br>
+                                <input type="text" name="first_name" value={{user.first_name}} class="form-control">
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="last_name">Last Name</label><br>
+                                <input type="text" name="last_name" value={{user.last_name}} class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="current_password">Current Password</label><br>
+                                <input type="password" name="current_password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Update name">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="changeEmailModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class- "modal-title">Edit Email</h3>
+                </div>
+                <form action="account/update_email" method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value={{user.id}}>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="new_email">New email</label><br>
+                                <input type="text" name="new_email" class="form-control">
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="conf_email">Confirm new email</label>
+                                <input type="text" name="conf_email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="current_password">Current Password</label><br>
+                                <input type="password" name="current_password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Update email">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class- "modal-title">Edit Password</h3>
+                </div>
+                <form action="account/update_password" method="post">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value={{user.id}}>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="new_password">New password</label><br>
+                                <input type="password" name="new_password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="password">Confirm password</label><br>
+                                <input type="password" name="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="current_password">Current password</label><br>
+                                <input type="current_password" name="current_password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Update password">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

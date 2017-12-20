@@ -20,7 +20,7 @@
         <div class="container hidden-phone">
             <div class="row">
                 <div class="col-xs-2">
-                    <a class="navbar-brand" href="{% url 'users:index' %}">GrubHub</a>
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">GrubHub</a>
                 </div>
                 <form action="#">
                     <div class="input col-xs-4 bl">
@@ -35,7 +35,7 @@
                 </form>
                 <div class="col-xs-3 links bl">
                     <a class="link" href="#">Contact Us</a>
-                    <a class="icon" href="#"><span class="glyphicon glyphicon-user"></span></a>
+                    <a class="icon" href="{% url 'users:main_profile' %}"><span class="glyphicon glyphicon-user"></span></a>
                     <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
                 </div>
             </div>
@@ -45,10 +45,10 @@
         <h2>Your Account</h2>
         <ul>
             <li>
-                <a href="#">Profile</a>
+                <a href="{% url 'users:main_profile' %}">Profile</a>
             </li>
             <li>
-                Address and Phone
+                <span>Address and Phone</span>
             </li>
             <li>
                 <a href="#">Payments</a>
