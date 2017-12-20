@@ -16,7 +16,9 @@
         <div class="container hidden-phone">
             <div class="row">
                 <div class="col-xs-2">
-                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">GrubHub</a>
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">
+                        <img src="{% static 'users/img/logo.svg' %}" alt="GrubHub" width="100px">
+                    </a>
                 </div>
                 <form action="#">
                     <div class="input col-xs-4 bl">

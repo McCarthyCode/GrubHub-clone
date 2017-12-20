@@ -102,18 +102,22 @@ nav {
 .main-pane a:hover {
     color: #005cb2 !important;
 }
+.restaurant-header,
 .address-header {
     display: flex;
     justify-content: space-between;
 }
+.restaurant-header h3,
 .address-header h3,
 .modal h3 {
     font-family: "graphik", Arial, Helvetica, sans-serif !important;
     font-weight: bold;    
 }
+.restaurant-header a,
 .address-header a {
     margin-top: 24px;
 }
+.restaurants,
 .addresses,
 .accounts {
     margin-bottom: 12px;
@@ -121,6 +125,7 @@ nav {
 .accounts {
     margin-top: 35px;
 }
+.restaurant-card,
 .address-card,
 .account-card {
     display: flex;
@@ -129,6 +134,7 @@ nav {
     border-bottom: 1px solid #eeeeef;
     background-color: white;
 }
+.restaurant-card,
 .address-card {
     padding: 16px 12px;
 }
@@ -199,6 +205,9 @@ nav {
     border: 2px solid white;
     border-radius: 4px;
     margin-top: 20px;
+}
+img {
+    padding-left: 8%;
 }
 footer {
     color: white !important;
