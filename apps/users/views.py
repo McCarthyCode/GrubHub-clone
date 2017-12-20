@@ -8,7 +8,7 @@ from .models import Grubber, GrubberManager, UserAddress
 
 def index(request):
     if 'id' in request.session:
-        return redirect('user:main_profile')
+        return redirect('users:main_profile')
     return render(request, 'users/index.html')
 
 def login(request):
@@ -19,7 +19,7 @@ def login(request):
             messages.error(request, error)
         return redirect('users:index')
     request.session['id'] = response
-    return redirect("users:main_profile")
+    return redirect("users:profile")
 
 def register(request):
     gm = GrubberManager()
@@ -29,15 +29,7 @@ def register(request):
             messages.error(request, error)
         return redirect('users:index')
     request.session['id'] = response
-    return redirect("users:main_profile")
-
-def update_name(request):
-    response = Grubber.objects.modify_user(request.POST, 'update_name')
-    return redirect('users:main_profile')
-
-def update_email(request):
-    response = Grubber.objects.modify_user(request.POST, 'update_email')
-    return redirect('users:main_profile')
+    return redirect("users:profile")
 
 def show_profile(request):
     context = {
@@ -50,6 +42,18 @@ def show_account(request):
         'user': User.objects.get(id=request.session['id'])
     }
     return render(request, "users/account.html", context)
+
+def update_name(request):
+    response = Grubber.objects.modify_user(request.POST, 'update_name')
+    return redirect('users:main_profile')
+
+def update_email(request):
+    response = Grubber.objects.modify_user(request.POST, 'update_email')
+    return redirect('users:main_profile')
+
+def update_password(request):
+    response = Grubber.objects.modify_user(request.POST, 'update_password')
+    return redirect('users:main_profile')
 
 def show_addresses(request):
     user = User.objects.get(id=request.session['id'])
@@ -67,14 +71,14 @@ def add_address(request):
         return redirect('users:user_addresses')
     return redirect('users:user_addresses')
 
-def destroy_address(request, address_id):
-    address_deleting = UserAddress.objects.get(id=address_id)
-    address_deleting.delete()
-    return redirect('users:user_addresses')
-
 def update_address(request):
     response = UserAddress.objects.updated_address(request.POST)
     print response
+    return redirect('users:user_addresses')
+
+def destroy_address(request, address_id):
+    address_deleting = UserAddress.objects.get(id=address_id)
+    address_deleting.delete()
     return redirect('users:user_addresses')
 
 def reset(request):

@@ -61,7 +61,6 @@ class RestaurantAddressManager(models.Manager):
 
         return (False, errors)
 
-
 class Restaurant(models.Model):
     rest_name = models.CharField(max_length=255)
     rest_owner = models.ForeignKey(Grubber, name="owned_by")
@@ -85,14 +84,8 @@ class RestaurantAddress(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = RestaurantAddressManager()
 
-class Menu(models.Model):
-    menu_item = models.CharField(max_length=50)
-    desc = models.CharField(max_length=500)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
 class RestaurantCategory(models.Model):
-    restaurant_category_choices = (
+    restaurant_category_choices = {
         ('Alcohol', 'Alcohol'),
         ('American', 'American'),
         ('Asian', 'Asian'),
@@ -143,6 +136,12 @@ class RestaurantCategory(models.Model):
         ('Vietnamese', 'Vietnamese'),
         ('Wings', 'Wings'),
         ('Wraps', 'Wraps'),
-    )
-    restaurant_categories = models.CharField(max_length=100, choices=restaurant_category_choices, null=True)
+    }
+    restaurant_categories = models.CharField(max_length=100, choices=restaurant_category_choices)
     #category_img = 
+
+class Menu(models.Model):
+    menu_item = models.CharField(max_length=50)
+    desc = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

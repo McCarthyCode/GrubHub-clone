@@ -110,17 +110,13 @@ class GrubberManager(models.Manager):
                     return (True, user_updating)
             elif action == 'update_password':
                 if len(postData['new_password']) < 1:
-                    errors.append("Please enter a password")
-                if len(postData['conf_email']) < 1:
-                    errors.append("Please enter an email")
-                if not EMAIL_REGEX.match(postData['new_email']):
-                    errors.append("Please enter a valid email!")
-                if not EMAIL_REGEX.match(postData['conf_email']):
-                    errors.append("Please enter a valid email!")
+                    errors.append("Please enter a password!")
+                if len(postData['confirm_password']) < 1:
+                    errors.append("Please enter a password!")
                 if not correct_pw:
                     errors.append("Please enter a password!")
                 if not errors:
-                    user_updating.email = postData['new_email']
+                    user_updating.set_password(postData['new_password'])
                     user_updating.save()
                     return (True, user_updating)
                 return (False, errors)
