@@ -21,13 +21,14 @@ def show_restaurants(request):
     return render(request, 'restaurants/index.html', context)
 
 def rest_profile(request, rest_id):
-    print "all good"
     # return HttpResponse('placeholder for restuarant profile')
     rest = Restaurant.objects.get(id=rest_id)
+    request.session['rest_id'] = rest.id
     context = {
         'restaurant': rest,
         'locations': RestaurantAddress.objects.filter(rest_addresses_id=rest.id),
-        'categories': rest.category.all()
+        'categories': rest.category.all(),
+        'all_cats': RestaurantCategory.objects.all()
     }
     return render(request, 'restaurants/show.html', context)
 
@@ -36,12 +37,30 @@ def add_restaurant(request):
     Restaurant.objects.create_restaurant(request.POST, categories)
     return redirect('restaurants:restaurant_home')
 
-def add_location(request):
-    valid, response = RestaurantAddress.objects.address_validator(request.POST)
+def update_restaurant(request):
+    categories = request.POST.getlist('category')
+    rest_id = request.session['rest_id']
+    value = request.POST['selector']
+    valid, response = Restaurant.objects.update_restaurant(request.POST, categories, value)
     if not valid:
         for error in response:
             messages.error(request, error)
-        return redirect('restaurants:rest_profile')
-    rest_id = response[0].rest_addresses_id
+        return redirect('restaurants:rest_profile', rest_id)
+    return redirect('restaurants:rest_profile', rest_id)
+
+def destroy_restaurant(request):
+    #need to delete address as well
+    rest_id = request.session['rest_id']
+    rest_deleting = Restaurant.objects.get(id=rest_id)
+    rest_deleting.delete()
+    return redirect('restaurants:restaurant_home')
+
+def add_location(request):
+    valid, response = RestaurantAddress.objects.address_validator(request.POST)
+    rest_id = request.session['rest_id']
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+        return redirect('restaurants:rest_profile', rest_id)
     print response.values()
     return redirect('restaurants:rest_profile', rest_id)
