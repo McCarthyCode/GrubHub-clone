@@ -166,6 +166,33 @@ nav {
     display: inline-block;
     padding: 5px;
 }
+.tags {
+    text-align: center;
+    -webkit-user-select: none;       
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tags input[type="checkbox"] {
+    display: none;
+}
+.tags label {
+    font-weight: normal;
+    padding: 5px;
+    border-radius: 4px;
+}
+.tags label:hover {
+    color: white;
+    background-color: #18628C;
+}
+.tags .active {
+    color: white;
+    background-color: #197bb2;
+}
+.tags .inactive {
+    color: black;
+    background-color: #dcdcdc;
+}
 .modal-trigger {
     cursor: pointer;
 }
