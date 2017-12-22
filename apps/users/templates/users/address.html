@@ -10,6 +10,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'users/img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -67,13 +68,16 @@
             <li>
                 <a href="{% url 'restaurants:restaurant_home' %}">My restaurants</a>
             </li>
+            <li>
+                <a href="{% url 'users:reset' %}">Log out</a>
+            </li>
         </ul>
     </div>
     <div class="main-pane col-xs-9">
         <div class="address-header">
             <h3>Addresses</h3>
             <a class="modal-trigger" data-toggle="modal" data-target="#addAddressModal">
-                + Add a new address
+                <span>+ Add a new address</span>
             </a>
         </div>
         <div class="addresses">
@@ -96,7 +100,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="modal fade" id="editAddressModal{{address.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="editAddressModal{{address.id}}" tabindex="-1" role="dialog" aria-labelledby="editAddressModal{{address.id}}" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -173,7 +177,7 @@
             {% endfor %}
         </div>
     </div>
-    <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

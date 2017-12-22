@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Grubber, GrubberManager, UserAddress
-
+from time import gmtime, strftime
+from django.utils import timezone
 def index(request):
     if 'id' in request.session:
         return redirect('users:main_profile')
@@ -32,8 +33,17 @@ def register(request):
     return redirect("users:lets_eat")
 
 def show_profile(request):
+    hour = int(strftime("%H", gmtime()))
+    hour = (hour - 6) % 24
+    if hour >= 18:
+        time = 'evening'
+    elif hour >= 12:
+        time = 'afternoon'
+    else:
+        time = 'morning'
     context = {
-        'user': User.objects.get(id=request.session['id'])
+        'user': User.objects.get(id=request.session['id']),
+        'time': time
     }
     return render(request, "users/lets-eat.html", context)
 
