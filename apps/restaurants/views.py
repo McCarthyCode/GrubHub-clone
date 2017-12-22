@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
-from .models import Restaurant, RestaurantAddress, RestaurantCategory
 from ..users.models import User
+from ..menus.models import Menu, MenuItem
+from .models import Restaurant, RestaurantAddress, RestaurantCategory
+
 
 # Create your views here.
 def show_restaurants(request):
@@ -19,14 +21,15 @@ def show_restaurants(request):
     return render(request, 'restaurants/index.html', context)
 
 def rest_profile(request, rest_id):
-    # return HttpResponse('placeholder for restuarant profile')
+    print "this shouldn't be happening"
     rest = Restaurant.objects.get(id=rest_id)
     request.session['rest_id'] = rest.id
     context = {
-        'restaurant': rest,
-        'locations': RestaurantAddress.objects.filter(rest_addresses_id=rest.id),
+        'all_cats': RestaurantCategory.objects.all(),
         'categories': rest.category.all(),
-        'all_cats': RestaurantCategory.objects.all()
+        'locations': RestaurantAddress.objects.filter(rest_addresses_id=rest.id),
+        'menus': Menu.objects.filter(restaurant_id=rest.id),
+        'restaurant': rest,
     }
     return render(request, 'restaurants/show.html', context)
 

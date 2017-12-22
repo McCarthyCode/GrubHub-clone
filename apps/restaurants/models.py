@@ -136,13 +136,3 @@ class RestaurantAddress(models.Model):
 class RestaurantCategory(models.Model):
     restaurant_categories = models.CharField(max_length=100)
     #category_img = 
-
-class MenuItem(models.Model):
-    menu_item = models.CharField(max_length=50)
-    desc = models.CharField(max_length=500)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    restaurant = models.ForeignKey(Restaurant, name="menu")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-# Menu class

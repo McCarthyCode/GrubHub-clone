@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'restaurant/(?P<rest_id>\d+)/menu',include('apps.menus.urls', namespace="menus")),
     url(r'^restaurant', include('apps.restaurants.urls', namespace="restaurants")),
     url(r'^', include('apps.users.urls', namespace='users')),
 ]

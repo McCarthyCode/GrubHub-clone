@@ -1,0 +1,19 @@
+{% for item in items %}
+    <h2>{{item.menu.menu_type}}</h2>
+    {{item.item}}<br>
+    {{item.desc}}<br>
+    ${{item.price}}<br>
+    {{item.menu_id}}
+{% endfor %}
+<h3>Add a new item</h3>
+<form action="add_item" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="menu_id" value={{menu.id}}>
+    <label for="item">Item</label>
+    <input type="text" name="item"><br>
+    <label for="desc">Description</label>
+    <input type="text" name="desc"><br>
+    <label for="price">Price</label>
+    <input type="text" name="price"><br>
+    <input type="submit" value="Submit">
+</form>
