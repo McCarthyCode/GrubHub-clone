@@ -53,8 +53,10 @@ class GrubberManager(models.Manager):
                 return (True, user.id)
             elif action == 'login':
                 #compares user password with posted password
-                correct_pw = email_exists[0].check_password(
-                    postData['password']) if len(email_exists) > 0 else False
+                if len(email_exists) > 0:
+                    correct_pw = email_exists[0].check_password(postData['password'])
+                else:
+                    correct_pw = False
                 if not correct_pw:
                     errors.append(
                         "This user either doesn't exist or the password is wrong... figure it out.")

@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.show_restaurants, name="restaurant_home"),
-    url(r'/(?P<rest_id>\d+)$', views.rest_profile, name="rest_profile"),
+    url(r'(?P<rest_id>\d+)$', views.rest_profile, name="rest_profile"),
     url(r'update_location$', views.update_location),
     url(r'delete_location$', views.destroy_location),
     url(r'(?P<rest_id>\d+)$', views.rest_profile, name="rest_profile"),

@@ -4,47 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login and Registration</title>
+    <title>Food Delivery | Restaurant Takeout | Order Food Online | Grubhub</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'users/img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 </head>
 <body>
-    <div class="container mt-15">
-        {% if messages %}
-            {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
+    <nav class="navbar navbar-toggleable-md navbar-dark navbar-fixed-top bg-faded">
+        <div class="container hidden-phone">
+            <div class="row">
+                <div class="col-xs-3">
+                    <a class="navbar-brand" href="{% url 'users:lets_eat' %}">
+                        <img src="{% static 'users/img/logo.svg' %}" alt="GrubHub" width="100px">
+                    </a>
+                </div>
+                <div class="input col-xs-6"></div>
+                <div class="col-xs-3 links">
+                    <button class="modal-trigger" data-toggle="modal" data-target="#loginModal">Sign in</button>
+                    <button class="modal-trigger" data-toggle="modal" data-target="#registerModal">Register</button>
+                    <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
+                </div>
+            </div>
         </div>
-            {% endfor %}
-        {% endif %}
-        <div class="row">
-            <div class="col-sm-6">
-                <h3>Register</h3>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+                {% endfor %}
+            {% endif %}
+            <h2>Who delivers in your neighborhood?</h2>
+        </div>
+    </div>
+    <div class="bg-white center">
+        <img src="{% static 'users/img/how-to.png' %}" alt="How to GrubHub">
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3">
+                    <h4>Get to know us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">About Grubhub</a>
+                        </li>
+                        <li>
+                            <a href="#">Our apps</a>
+                        </li>
+                        <li>
+                            <a href="#">Our blog</a>
+                        </li>
+                        <li>
+                            <a href="#">Careers</a>
+                        </li>
+                        <li>
+                            <a href="#">Investor relations</a>
+                        </li>
+                        <li>
+                            <a href="#">News</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Useful links</h4>
+                    <ul>
+                        <li>
+                            <a href="#">Gift cards</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="#">Contact us</a>
+                        </li>
+                        <li>
+                            <a href="#">Grubhub for Alexa</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Connect with us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">The Crave</a>
+                        </li>
+                        <li>
+                            <a href="#">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="#">Instagram</a>
+                        </li>
+                        <li>
+                            <a href="#">YouTube</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Partner with us</h4>
+                    <ul>
+                        <li>
+                            <a href="#">For restaurants</a>
+                        </li>
+                        <li>
+                            <a href="#">For drivers</a>
+                        </li>
+                        <li>
+                            <a href="#">For corporate accounts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row legal">
+                <div class="col-xs-8">
+                    <span>&copy; 2017 Grubhub All rights reserved.</span>
+                </div>
+                <div class="col-xs-4">
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class-"modal-title">Register</h3>
+                </div>
                 <form action="{% url 'users:register' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="first_name" placeholder="First Name"
-                        value="" class="form-control">
-                    <input type="text" name="last_name" placeholder="Last Name"
-                        value="" class="form-control">
-                    <input type="text" name="email" placeholder="Email"
-                        value="" class="form-control">
-                    <input type="password" name="password" placeholder="Password"
-                        class="form-control">
-                    <input type="password" name="confirm_password" placeholder="Confirm Password"
-                        class="form-control">
-                    <input type="submit" value="Register" class="btn btn-primary mt-15px">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="text" name="first_name" placeholder="First Name"
+                            class="form-control">
+                        <input type="text" name="last_name" placeholder="Last Name"
+                            class="form-control">
+                        <input type="text" name="email" placeholder="Email"
+                            class="form-control">
+                        <input type="password" name="password" placeholder="Password"
+                            class="form-control">
+                        <input type="password" name="confirm_password" placeholder="Confirm Password"
+                            class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Register">
+                    </div>
                 </form>
             </div>
-            <div class="col-sm-6">
-                <h3>Log In</h3>
+        </div>
+    </div>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class-"modal-title">Login</h3>
+                </div>
                 <form action="{% url 'users:login' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="email" placeholder="Email" class="form-control">
-                    <input type="password" name="password" placeholder="Password" class="form-control">
-                    <input type="submit" value="Log In" class="btn btn-primary mt-15px">
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="text" name="email" placeholder="Email"
+                            class="form-control">
+                        <input type="password" name="password" placeholder="Password"
+                            class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </div>
                 </form>
             </div>
         </div>
