@@ -15,12 +15,10 @@ from django.shortcuts import render, HttpResponse, redirect
 #     return redirect('menus:menu_home', l_menu_type, rest_id)
 
 def menu_profile(request, menu_type, rest_id):
-    menus = Menu.objects.filter(restaurant=rest_id)
-    menu = Menu.objects.get(menu_type=menus.menu_type)
-    print menu
-    # print menu
-    # context = {
-    #     'items': items.menu.all(),
-    #     'menu': Menu.objects.filter(menu_type=menu_type)
-    # }
+    menu = Menu.objects.filter(
+        restaurant_id=rest_id
+    ).get(menu_type=menu_type)
+    context = {
+        'items': MenuItem.objects.filter(menu_id=menu.id),
+    }
     return render(request, 'menus/show.html', context)

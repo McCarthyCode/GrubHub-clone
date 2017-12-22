@@ -9,7 +9,7 @@
 <h3>Menus</h3>
 {% for menu in menus %}
     <ul>
-        <li><a href="{% url 'menus:menu_home' restaurant.id menu.menu_type %}">{{menu.menu_type}} id={{menu.id}}</a> 
+        <li><a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type}} Menu</a> 
     </ul>
 {% endfor %}
 <h3>Locations</h3>

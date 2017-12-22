@@ -24,6 +24,7 @@ def rest_profile(request, rest_id):
     print "this shouldn't be happening"
     rest = Restaurant.objects.get(id=rest_id)
     request.session['rest_id'] = rest.id
+    print Menu.objects.filter(restaurant_id=rest.id).values()
     context = {
         'all_cats': RestaurantCategory.objects.all(),
         'categories': rest.category.all(),

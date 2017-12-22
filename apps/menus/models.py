@@ -8,6 +8,11 @@ from datetime import datetime
 from ..restaurants.models import Restaurant
 # Create your models here.
 
+# class MenuManager(models.Manager):
+#     def 
+
+
+
 class Menu(models.Model):
     menu_type = models.CharField(max_length=50)
     restaurant = models.ForeignKey(Restaurant)
