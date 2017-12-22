@@ -1,5 +1,17 @@
 <h2>{{restaurant.rest_name}}</h2>
 <a href="restaurant/delete_restaurant">Delete Restaurant</a>
+<h3>Categories</h3>
+{% for category in categories %}
+    <ul>
+        <li>{{category.restaurant_categories}}</li>
+    </ul>
+{% endfor %}
+<h3>Menus</h3>
+{% for menu in menus %}
+    <ul>
+        <li><a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type}} Menu</a> 
+    </ul>
+{% endfor %}
 <h3>Locations</h3>
 {% for location in locations %}
     <ul>
@@ -36,12 +48,6 @@
         <input type="submit" value="Submit">
     </form>
     <a href="#">Delete location</a>
-{% endfor %}
-<h3>Categories</h3>
-    {% for category in categories %}
-        <ul>
-            <li>{{category.restaurant_categories}}</li>
-        </ul>
 {% endfor %}
 <h3>Add a location</h3>
 <form action="add_location" method="post">
