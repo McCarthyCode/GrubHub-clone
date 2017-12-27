@@ -1,88 +1,202 @@
-<h2>{{restaurant.rest_name}}</h2>
-<a href="restaurant/delete_restaurant">Delete Restaurant</a>
-<h3>Categories</h3>
-{% for category in categories %}
-    <ul>
-        <li>{{category.restaurant_categories}}</li>
-    </ul>
-{% endfor %}
-<h3>Menus</h3>
-{% for menu in menus %}
-    <ul>
-        <li><a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type}} Menu</a> 
-    </ul>
-{% endfor %}
-<h3>Locations</h3>
-{% for location in locations %}
-    <ul>
-        {% if address_label %}
-        <li>{{location.address_label}}</li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{restaurant.rest_name}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    {% load static %}
+    <script src="{% static 'restaurants/js/script.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'restaurants/img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md navbar-dark navbar-fixed-top bg-faded">
+        <div class="row">
+            <div class="col-md-2 col-sm-9">
+                <a class="navbar-brand" href="{% url 'users:lets_eat' %}">
+                    <img src="{% static 'restaurants/img/logo.svg' %}" alt="GrubHub" width="100px">
+                </a>
+            </div>
+            <form action="#">
+                <div class="input col-md-4 hidden-sm hidden-xs bl">
+                    <input type="text" placeholder="Where are you? (Required)">
+                    <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+                </div>
+                <div class="input col-md-3 hidden-sm hidden-xs bl">
+                    <input type="text" placeholder="e.g. Sushi, pad thai, Bob's Pizza">
+                    <i class="glyphicon glyphicon-search form-control-feedback">
+                    </i>
+                </div>
+            </form>
+            <div class="col-md-3 links bl">
+                <a class="link" href="#">Contact Us</a>
+                <a class="icon" href="{% url 'users:main_profile' %}"><span class="glyphicon glyphicon-user"></span></a>
+                <a class="icon" href="#"><span class="glyphicon glyphicon-lock"></span></a>
+            </div>
+        </div>
+    </nav>
+    <div class="main-pane col-md-9 col-sm-12">
+        <div class="restaurant-header">
+            <h3>{{restaurant.rest_name}}</h3>
+            <a href="restaurant/delete_restaurant">Delete Restaurant</a>
+        </div>
+        <h4>Categories</h4>
+        <ul class="tags">
+        {% for category in categories %}
+            <li>
+                <span class="active">{{category.restaurant_categories}}</span>
+            </li>
+        {% endfor %}
+        </ul>
+        <h4>Menus</h4>
+        {% if menus %}
+        <ul>
+        {% for menu in menus %}
+            <li>
+                <a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type}} Menu</a>
+            </li>
+        {% endfor %}
+        </ul>
         {% else %}
-        <li>{{location.address_1}}</li>
+        <p>No menus</p>
         {% endif %}
-    </ul>
-    <form action="update_location" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="location_id" value={{location.id}}>
-        <label for="address_1">Address</label>
-        <input type="text" name="address_1" value={{location.address_1}}>
-        <br>
-        <label for="address_2">Apt#/Suite (optional)</label>
-        <input type="text" name="address_2" value={{location.address_2}}>
-        <br>
-        <label for="city">City (required)</label>
-        <input type="text" name="city" value={{location.city}}>
-        <br>
-        <label for="state">State (required)</label>
-        <input type="text" name="state" value={{location.state}}>
-        <br>
-        <label for="zip_code">Zip (required)</label>
-        <input type="text" name="zip_code" value={{location.zip_code}}>
-        <br>
-        <label for="zip_code">Name for your restaurant (option)</label>
-        <input type="text" name="address_label" value='{{location.address_label}}' placeholder="Bob's Burgers - SLC">
-        <br>
-        <label for="phone_number">Phone (required)</label>
-        <input type="text" name="phone_number" value={{location.phone_number}}>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-    <a href="#">Delete location</a>
-{% endfor %}
-<h3>Add a location</h3>
-<form action="add_location" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="rest_id" value={{restaurant.id}}>
-    <label for="address_1">Address</label>
-    <input type="text" name="address_1"><br>
-    <label for="address_2">Apt#/Suite (optional)</label>
-    <input type="text" name="address_2"><br>
-    <label for="city">City (required)</label>
-    <input type="text" name="city"><br>
-    <label for="state">State (required)</label>
-    <input type="text" name="state"><br>
-    <label for="zip_code">Zip (required)</label>
-    <input type="text" name="zip_code"><br>
-    <label for="zip_code">Name for your restaurant (option)</label>
-    <input type="text" name="address_label" placeholder="Bob's Burgers - SLC"><br>
-    <label for="phone_number">Phone (required)</label>
-    <input type="text" name="phone_number"><br>
-    <input type="submit" value="Submit">
-</form>
-<h3>Update a restaurant</h3>
-<form action="update_restaurant" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="rest_id" value={{restaurant.id}}>
-    <label for="rest_name">Restaurant Name</label>
-    <input type="text" name="rest_name"><br>
-    <label for="selector">Add</label>
-    <input type="radio" name="selector" value="add">
-    <label for="selector">Remove</label>
-    <input type="radio" name="selector" value="remove">
-    <ul>
-    {% for category in all_cats %}
-        <input type="checkbox" name="category" value={{category.id}}>{{category.restaurant_categories}} 
-    {% endfor %}
-    </ul>
-    <input type="submit" value="Submit">
-</form>
+        <h4>Locations</h4>
+        {% for location in locations %}
+        <div class="restaurant-header">
+            {% if address_label %}
+            <h5>{{location.address_label}}</h5>
+            {% else %}
+            <h5>{{location.address_1}}</h5>
+            {% endif %}
+            <a href="#">Delete location</a>
+        </div>
+        <form action="update_location" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="location_id" value={{location.id}}>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="address_1">Address (required)</label><br>
+                    <input type="text" name="address_1" class="form-control" value="{{location.address_1}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="address_2">Apt/Suite # (optional)</label><br>
+                    <input type="text" name="address_2" class="form-control" value="{{location.address_2}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <label for="city">City (required)</label><br>
+                    <input type="text" name="city" class="form-control" value="{{location.city}}">
+                </div>
+                <div class="col-xs-3">
+                    <label for="state">State (required)</label><br>
+                    <input type="text" name="state" class="form-control" value="{{location.state}}">
+                </div>
+                <div class="col-xs-3">
+                    <label for="zip_code">Zip (required)</label><br>
+                    <input type="text" name="zip_code" class="form-control" value="{{location.zip_code}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="zip_code">Name for your restaurant (optional)</label><br>
+                    <input type="text" name="address_label" placeholder="Bob's Burgers - SLC" class="form-control" value="{{location.address_label}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="phone_number">Phone (required)</label><br>
+                    <input type="text" name="phone_number" class="form-control" value="{{location.phone_number}}">
+                </div>
+            </div>
+            <br>
+            <input type="submit" value="Edit" class="btn btn-primary">
+        </form>
+        {% empty %}
+        <p>No locations</p>
+        {% endfor %}
+        <h4>Add a location</h4>
+        <form action="add_location" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="rest_id" value={{restaurant.id}}>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="address_1">Address (required)</label><br>
+                    <input type="text" name="address_1" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="address_2">Apt/Suite # (optional)</label><br>
+                    <input type="text" name="address_2" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <label for="city">City (required)</label><br>
+                    <input type="text" name="city" class="form-control">
+                </div>
+                <div class="col-xs-3">
+                    <label for="state">State (required)</label><br>
+                    <input type="text" name="state" class="form-control">
+                </div>
+                <div class="col-xs-3">
+                    <label for="zip_code">Zip (required)</label><br>
+                    <input type="text" name="zip_code" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="zip_code">Name for your restaurant (optional)</label><br>
+                    <input type="text" name="address_label" placeholder="Bob's Burgers - SLC" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="phone_number">Phone (required)</label><br>
+                    <input type="text" name="phone_number" class="form-control">
+                </div>
+            </div>
+            <br>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+        <h4>Update a restaurant</h4>
+        <form action="update_restaurant" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="rest_id" value={{restaurant.id}}>
+            <div class="row">
+                <div class="col-xs-9">
+                    <label for="rest_name">Restaurant Name</label><br>
+                    <input type="text" name="rest_name" class="form-control" value="{{restaurant.rest_name}}">
+                </div>
+                <div class="col-xs-3">
+                    <input type="radio" name="selector" value="add">
+                    <label for="selector">Add</label>
+                    <input type="radio" name="selector" value="remove">
+                    <label for="selector">Remove</label>
+                </div>
+            </div>
+            <br>
+            <div class="tags center">
+            {% for category in all_cats %}
+                <input type="checkbox" id="{{category.id}}" name="category" value={{category.id}}>
+                <label class="inactive" for="{{category.id}}">{{category.restaurant_categories}}</label>
+            {% endfor %}
+            </div>
+            <input type="submit" value="Edit" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="order-pane col-md-3 hidden-sm">
+        <h4>Your order</h4>
+    </div>
+</body>
+</html>
