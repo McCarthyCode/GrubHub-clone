@@ -26,20 +26,17 @@ class RestaurantManager(models.Manager):
             return (True, all_restaurants)
         return (False, errors)
 
-    def update_restaurant(self, postData, categories, value):
+    def update_restaurant(self, postData, categories):
         rest_updating = Restaurant.objects.get(id=postData['rest_id'])
         errors = []
         if len(postData['rest_name']) < 1:
             errors.append("Please enter a Restaurant Name")
         if not errors:
             rest_updating.rest_name = postData['rest_name']
-            rest_updating.save()
-            if value == 'add':
-                for cat in categories:
-                    rest_updating.category.add(cat)
-            if value == 'remove':
-                for cat in categories:
-                    rest_updating.category.remove(cat)
+            for cat in rest_updating.category.all():
+                rest_updating.category.remove(cat)
+            for cat in categories:
+                rest_updating.category.add(cat)
             rest_updating.save()
             return (True, rest_updating)
         return (False, errors)

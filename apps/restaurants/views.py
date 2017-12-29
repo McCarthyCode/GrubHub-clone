@@ -40,8 +40,7 @@ def add_restaurant(request):
 def update_restaurant(request):
     categories = request.POST.getlist('category')
     rest_id = request.session['rest_id']
-    value = request.POST['selector']
-    valid, response = Restaurant.objects.update_restaurant(request.POST, categories, value)
+    valid, response = Restaurant.objects.update_restaurant(request.POST, categories)
     if not valid:
         for error in response:
             messages.error(request, error)

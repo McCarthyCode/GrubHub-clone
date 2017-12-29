@@ -174,22 +174,21 @@
             {% csrf_token %}
             <input type="hidden" name="rest_id" value={{restaurant.id}}>
             <div class="row">
-                <div class="col-xs-9">
+                <div class="col-xs-12">
                     <label for="rest_name">Restaurant Name</label><br>
                     <input type="text" name="rest_name" class="form-control" value="{{restaurant.rest_name}}">
-                </div>
-                <div class="col-xs-3">
-                    <input type="radio" name="selector" value="add">
-                    <label for="selector">Add</label>
-                    <input type="radio" name="selector" value="remove">
-                    <label for="selector">Remove</label>
                 </div>
             </div>
             <br>
             <div class="tags center">
             {% for category in all_cats %}
+                {% if category in categories %}
+                <input type="checkbox" id="{{category.id}}" name="category" value={{category.id}} checked="checked">
+                <label class="active" for="{{category.id}}">{{category.restaurant_categories}}</label>
+                {% else %}
                 <input type="checkbox" id="{{category.id}}" name="category" value={{category.id}}>
                 <label class="inactive" for="{{category.id}}">{{category.restaurant_categories}}</label>
+                {% endif %}
             {% endfor %}
             </div>
             <input type="submit" value="Edit" class="btn btn-primary">
