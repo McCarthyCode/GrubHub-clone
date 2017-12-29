@@ -30,6 +30,7 @@ def rest_profile(request, rest_id):
         'menus': Menu.objects.filter(restaurant_id=rest.id),
         'restaurant': rest,
     }
+    print rest.owned_by.id
     return render(request, 'restaurants/show.html', context)
 
 def add_restaurant(request):

@@ -34,29 +34,33 @@ def register(request):
     return redirect("users:lets_eat")
 
 def show_profile(request):
-    hour = int(strftime("%H", gmtime()))
-    hour = (hour - 6) % 24
-    if hour >= 18:
-        time = 'evening'
-    elif hour >= 12:
-        time = 'afternoon'
-    else:
-        time = 'morning'
     if 'id' in request.session:
-        user = User.objects.get(id=request.session['id'])
-    else:
-        user = []
-    context = {
-        'user': user,
-        'time': time
-    }
-    return render(request, "users/lets-eat.html", context)
+        hour = int(strftime("%H", gmtime()))
+        hour = (hour - 6) % 24
+        if hour >= 18:
+            time = 'evening'
+        elif hour >= 12:
+            time = 'afternoon'
+        else:
+            time = 'morning'
+        if 'id' in request.session:
+            user = User.objects.get(id=request.session['id'])
+        else:
+            user = []
+        context = {
+            'user': user,
+            'time': time
+        }
+        return render(request, "users/lets-eat.html", context)
+    return redirect('users:index')
 
 def show_account(request):
-    context = {
-        'user': User.objects.get(id=request.session['id'])
-    }
-    return render(request, "users/account.html", context)
+    if 'id' in request.session:
+        context = {
+            'user': User.objects.get(id=request.session['id'])
+        }
+        return render(request, "users/account.html", context)
+    return redirect('users:index')
 
 def update_name(request):
     response = Grubber.objects.modify_user(request.POST, 'update_name')

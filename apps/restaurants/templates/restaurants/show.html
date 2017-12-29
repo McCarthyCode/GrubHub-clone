@@ -45,7 +45,9 @@
     <div class="main-pane col-md-9 col-sm-12">
         <div class="restaurant-header">
             <h3>{{restaurant.rest_name}}</h3>
+            {% if restaurant.owned_by.id == request.session.id %}
             <a href="restaurant/delete_restaurant">Delete Restaurant</a>
+            {% endif %}
         </div>
         <h4>Categories</h4>
         <ul class="tags">
@@ -74,9 +76,12 @@
             <h5>{{location.address_label}}</h5>
             {% else %}
             <h5>{{location.address_1}}</h5>
-            {% endif %}
+            {% endif %}   
+            {% if restaurant.owned_by.id == request.session.id %}         
             <a href="#">Delete location</a>
+            {% endif %}
         </div>
+        {% if restaurant.owned_by.id == request.session.id %}
         <form action="update_location" method="post">
             {% csrf_token %}
             <input type="hidden" name="location_id" value={{location.id}}>
@@ -121,9 +126,11 @@
             <br>
             <input type="submit" value="Edit" class="btn btn-primary">
         </form>
+        {% endif %}
         {% empty %}
         <p>No locations</p>
         {% endfor %}
+        {% if restaurant.owned_by.id == request.session.id %}
         <h4>Add a location</h4>
         <form action="add_location" method="post">
             {% csrf_token %}
@@ -193,6 +200,7 @@
             </div>
             <input type="submit" value="Edit" class="btn btn-primary">
         </form>
+        {% endif %}
     </div>
     <div class="order-pane col-md-3 hidden-sm">
         <h4>Your order</h4>
