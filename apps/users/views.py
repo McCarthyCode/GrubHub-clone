@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Grubber, GrubberManager, UserAddress
 from time import gmtime, strftime
 from django.utils import timezone
+
 def index(request):
     if 'id' in request.session:
         return redirect('users:main_profile')
@@ -41,8 +42,12 @@ def show_profile(request):
         time = 'afternoon'
     else:
         time = 'morning'
+    if 'id' in request.session:
+        user = User.objects.get(id=request.session['id'])
+    else:
+        user = []
     context = {
-        'user': User.objects.get(id=request.session['id']),
+        'user': user,
         'time': time
     }
     return render(request, "users/lets-eat.html", context)

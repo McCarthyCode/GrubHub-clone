@@ -42,7 +42,11 @@
     </nav>
     <div class="jumbotron">
         <div>
+            {% if user %}
             <h3>Good {{ time }}, {{user.first_name}}.</h3>
+            {% else %}
+            <h3>Good {{ time }}.</h3>
+            {% endif %}
             <p>I want <a href="#">Pickup for Today, ASAP</a></p>
         </div>
         <button>View all restaurants</button>
