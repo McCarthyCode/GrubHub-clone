@@ -19,6 +19,10 @@ def menu_profile(request, menu_type, rest_id):
         restaurant_id=rest_id
     ).get(menu_type=menu_type)
     context = {
+        'menu': menu.menu_type.title(),
         'items': MenuItem.objects.filter(menu_id=menu.id),
     }
+    print menu.menu_type
     return render(request, 'menus/show.html', context)
+
+# def create_menu(request, rest_id):

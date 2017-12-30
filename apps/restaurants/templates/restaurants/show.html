@@ -62,7 +62,7 @@
         <ul>
         {% for menu in menus %}
             <li>
-                <a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type}} Menu</a>
+                <a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type.title}} Menu</a>
             </li>
         {% endfor %}
         </ul>
