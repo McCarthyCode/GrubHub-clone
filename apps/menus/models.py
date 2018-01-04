@@ -9,7 +9,8 @@ from ..restaurants.models import Restaurant
 # Create your models here.
 
 # class MenuManager(models.Manager):
-#     def 
+#     def create_menu(self, postData):
+
 
 class Menu(models.Model):
     menu_type = models.CharField(max_length=50)

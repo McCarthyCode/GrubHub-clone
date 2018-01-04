@@ -11,4 +11,7 @@ $(document).ready(function () {
             $input.prop("checked", false);
         }
     });
+    $(function(){
+        $( "#tabs" ).tabs();
+    });
 });
