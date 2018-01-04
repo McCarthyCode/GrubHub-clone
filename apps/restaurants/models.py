@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from ..users.models import Grubber
 from datetime import datetime
 
@@ -39,6 +40,19 @@ class RestaurantManager(models.Manager):
                 rest_updating.category.add(cat)
             rest_updating.save()
             return (True, rest_updating)
+        return (False, errors)
+
+    def upload_profile_photo(self, postData, profile_photo):
+        rest_updating = Restaurant.objects.get(id=postData['rest_id'])
+        errors = []
+        if profile_photo.name.endswith(('.png', '.jpeg', '.jpg', '.gif')) is False:
+            errors.append("Please enter a valid image")
+            print errors
+        if not errors:
+            rest_updating.profile_photo = profile_photo
+            rest_updating.save()
+            print "File upload, successful"
+            return(True, profile_photo)
         return (False, errors)
 
 class RestaurantAddressManager(models.Manager):
@@ -111,7 +125,7 @@ class RestaurantAddressManager(models.Manager):
 class Restaurant(models.Model):
     rest_name = models.CharField(max_length=255)
     rest_owner = models.ForeignKey(User, name="owned_by")
-    #profile_photo
+    profile_photo = models.ImageField(blank=True, upload_to='profile_photos')
     #cover_photo
     category = models.ManyToManyField('RestaurantCategory')
     created_at = models.DateTimeField(auto_now_add=True)

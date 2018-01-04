@@ -33,6 +33,16 @@ def rest_profile(request, rest_id):
     print rest.owned_by.id
     return render(request, 'restaurants/show.html', context)
 
+def upload_profile_pic(request):
+    rest_id = request.session['rest_id']
+    profile_photo = request.FILES['myfile']
+    valid, response = Restaurant.objects.upload_profile_photo(request.POST, profile_photo)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+        return redirect('restaurants:rest_profile', rest_id)
+    return redirect('restaurants:rest_profile', rest_id)
+
 def add_restaurant(request):
     categories = request.POST.getlist('category')
     Restaurant.objects.create_restaurant(request.POST, categories)
