@@ -50,7 +50,9 @@
     </nav>
     <div class="main-pane col-md-9 col-sm-12">
         <div class="restaurant-header">
+            {% if restaurant.profile_photo %}
             <img src="{{restaurant.profile_photo.url}}" alt="" height="75" width="75">
+            {% endif %}
             <h3>{{restaurant.rest_name}}</h3>
             {% if restaurant.owned_by.id == request.session.id %}
             <a href="restaurant/delete_restaurant">Delete Restaurant</a>
