@@ -82,6 +82,9 @@
         {% for restaurant in restaurants %}
             <div class="restaurant-card">
                 <div class="restaurant">
+                    {% if restaurant.profile_photo %}
+                    <img src="{{restaurant.profile_photo.url}}" alt="" height="40" width="40">
+                    {% endif %}
                     <a href="{{restaurant.id}}">{{restaurant.rest_name}}</a>
                 </div>
             </div>
