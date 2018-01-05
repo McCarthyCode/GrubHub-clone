@@ -11,7 +11,12 @@ $(document).ready(function () {
             $input.prop("checked", false);
         }
     });
-    $(function(){
-        $( "#tabs" ).tabs();
+    $( "#tabs" ).tabs();
+    $('#tabs a').click(function(){
+        var $tabs = $("#tabs li");
+        $tabs.addClass('inactive');
+        $tabs.addClass('active');
+        $(this).parent().addClass('active');
+        $(this).parent().removeClass('inactive');
     });
 });
