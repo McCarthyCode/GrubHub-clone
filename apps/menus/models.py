@@ -17,7 +17,7 @@ class MenuManager(models.Manager):
             menu_name=postData['menu_name'],
             restaurant=Restaurant.objects.get(id=rest_id)
         )
-        return (True, ["none"])
+        return (True, errors)
 
     def update_menu(self, postData):
         errors = []
@@ -27,7 +27,16 @@ class MenuManager(models.Manager):
         menu = Menu.objects.get(id=postData['menu_id'])
         menu.menu_name = postData['menu_name']
         menu.save()
-        return (True, ["none"])
+        return (True, errors)
+
+    def destroy_menu(self, menu_id):
+        errors = []
+        menu = Menu.objects.get(id=menu_id)
+        if not menu:
+            errors.append("Invalid menu ID")
+            return (False, errors)
+        menu.delete()
+        return (True, errors)
 
 class Menu(models.Model):
     menu_name = models.CharField(max_length=50)

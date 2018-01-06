@@ -28,6 +28,13 @@ def update_menu(request, rest_id):
             messages.error(request, error)
     return redirect('restaurants:rest_profile', rest_id)
 
+def destroy_menu(request, rest_id, menu_id):
+    valid, response = Menu.objects.destroy_menu(menu_id)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+    return redirect('restaurants:rest_profile', rest_id)
+
 def menu_profile(request, rest_id):
     menus = Menu.objects.filter(
         restaurant_id=Restaurant.objects.get(rest_id)
