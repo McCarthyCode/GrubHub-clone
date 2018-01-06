@@ -14,15 +14,22 @@ from django.shortcuts import render, HttpResponse, redirect
 #     print l_menu_type
 #     return redirect('menus:menu_home', l_menu_type, rest_id)
 
-def menu_profile(request, menu_type, rest_id):
-    menu = Menu.objects.filter(
-        restaurant_id=rest_id
-    ).get(menu_type=menu_type)
+def create_menu(request, rest_id):
+    # mm = MenuManger()
+    valid, response = Menu.objects.create_menu(request.POST, rest_id)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+    return redirect('restaurants:rest_profile', rest_id)
+
+def menu_profile(request, rest_id):
+    menus = Menu.objects.filter(
+        restaurant_id=Restaurant.objects.get(rest_id)
+    )
     context = {
-        'menu': menu.menu_type.title(),
-        'items': MenuItem.objects.filter(menu_id=menu.id),
+        'menus': menus,
+        'items': MenuItem.objects.filter(rest_id=menus.restaurant.id),
     }
-    print menu.menu_type
     return render(request, 'menus/show.html', context)
 
 # def create_menu(request, rest_id):

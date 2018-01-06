@@ -96,15 +96,23 @@
                 {% endfor %}
             </div>
             <div id="tabs-2">
-                <h4>Menus</h4>
                 {% if menus %}
-                <ul>
-                    {% for menu in menus %}
+                {% for menu in menus %}
+                <h4>{{menu.menu_name.title}}</h4>
+                <ul class="menu-items">
+                    {% for item in items %}
+                    {% if item.menu == menu.id %}
                     <li>
-                        <a href="{% url 'menus:menu_home' menu.restaurant_id menu.menu_type %}">{{menu.menu_type.title}} Menu</a>
+                        <div>
+                            <h5>{{item.item}}</h5>
+                            <h5>{{item.price}}</h5>
+                        </div>
+                        <p>{{item.desc}}</p>
                     </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
+                {% endfor %}
                 {% else %}
                 <p>No menus</p>
                 {% endif %}
@@ -114,15 +122,28 @@
                 <h4>Upload a photo here!</h4>
                 <form action="upload_profile" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input type="hidden" name="rest_id" value={{restaurant.id}}>
+                    <input type="hidden" name="rest_id" value="{{restaurant.id}}">
                     <input type="file" name="myfile">
                     <button type="submit">Upload</button>
+                </form>
+                <h4>Add a Menu</h4>
+                <form action="{% url 'menus:create_menu' restaurant.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="menu_name">Menu Name (required)</label>
+                            <br>
+                            <input type="text" name="menu_name" class="form-control" value="{{location.address_1}}">
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-primary">
                 </form>
                 {% for location in locations %}
                 <h4>Edit {{location.address_1}}</h4>
                 <form action="update_location" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="location_id" value={{location.id}}>
+                    <input type="hidden" name="location_id" value="{{location.id}}">
                     <div class="row">
                         <div class="col-xs-12">
                             <label for="address_1">Address (required)</label>
@@ -175,7 +196,7 @@
                 <h4>Add a location</h4>
                 <form action="add_location" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="rest_id" value={{restaurant.id}}>
+                    <input type="hidden" name="rest_id" value="{{restaurant.id}}">
                     <div class="row">
                         <div class="col-xs-12">
                             <label for="address_1">Address (required)</label>
@@ -227,7 +248,7 @@
                 <h4>Update a restaurant</h4>
                 <form action="update_restaurant" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="rest_id" value={{restaurant.id}}>
+                    <input type="hidden" name="rest_id" value="{{restaurant.id}}">
                     <div class="row">
                         <div class="col-xs-12">
                             <label for="rest_name">Restaurant Name</label>
@@ -238,10 +259,10 @@
                     <br>
                     <div class="tags center">
                         {% for category in all_cats %} {% if category in categories %}
-                        <input type="checkbox" id="{{category.id}}" name="category" value={{category.id}} checked="checked">
+                        <input type="checkbox" id="{{category.id}}" name="category" value="{{category.id}}" checked="checked">
                         <label class="active" for="{{category.id}}">{{category.restaurant_categories}}</label>
                         {% else %}
-                        <input type="checkbox" id="{{category.id}}" name="category" value={{category.id}}>
+                        <input type="checkbox" id="{{category.id}}" name="category" value="{{category.id}}">
                         <label class="inactive" for="{{category.id}}">{{category.restaurant_categories}}</label>
                         {% endif %} {% endfor %}
                     </div>

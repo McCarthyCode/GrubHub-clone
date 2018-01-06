@@ -119,9 +119,6 @@ class RestaurantAddressManager(models.Manager):
             return (True, address_updating)
         return (False, errors)
 
-
-# class MenuManager(models.Manager):
-
 class Restaurant(models.Model):
     rest_name = models.CharField(max_length=255)
     rest_owner = models.ForeignKey(User, name="owned_by")
