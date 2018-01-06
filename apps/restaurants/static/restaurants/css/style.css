@@ -181,7 +181,6 @@ nav {
     padding: 5px;
 }
 .tags {
-    /* text-align: center; */
     -webkit-user-select: none;       
     -moz-user-select: none;
     -ms-user-select: none;
@@ -321,6 +320,10 @@ footer .row {
 }
 #tabs li {
     display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .tabs a {
     text-decoration: none;
@@ -339,6 +342,10 @@ footer .row {
     padding: 15px;
     margin-bottom: 1px;
 }
+.menu-card h5 {
+    font-weight: bold;
+    text-decoration: underline;
+}
 .menu-header {
     display: flex;
     justify-content: space-between;
@@ -346,16 +353,26 @@ footer .row {
 .menu-header ul {
     margin: 8px 0 !important;
 }
-.menu-header h5 {
-    font-weight: bold;
+.menu-items li {
+    display: inline-block;
+    background-color: white;
+    padding: 15px;
+    width: 49.75%;
+    margin-bottom: 5px;
 }
-.edit {
+.menu-items p {
+    color: #bfbfbf;
+}
+li.edit {
     text-decoration: none;
     color: #0074e4 !important;
     cursor: pointer;
 }
-.edit:hover {
+li.edit:hover {
     text-decoration: underline;
+}
+div.edit {
+    padding-left: 15px;
 }
 .hidden {
     display: none;

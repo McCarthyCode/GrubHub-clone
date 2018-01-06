@@ -7,8 +7,6 @@ from ..users.models import User
 from ..menus.models import Menu, MenuItem
 from .models import Restaurant, RestaurantAddress, RestaurantCategory
 
-
-# Create your views here.
 def show_restaurants(request):
     owner = User.objects.get(id=request.session['id'])
     u_rest = Restaurant.objects.filter(owned_by=owner)
@@ -23,14 +21,15 @@ def show_restaurants(request):
 def rest_profile(request, rest_id):
     rest = Restaurant.objects.get(id=rest_id)
     request.session['rest_id'] = rest.id
+    menus = Menu.objects.filter(restaurant_id=rest.id)
     context = {
         'all_cats': RestaurantCategory.objects.all(),
         'categories': rest.category.all(),
         'locations': RestaurantAddress.objects.filter(rest_addresses_id=rest.id),
-        'menus': Menu.objects.filter(restaurant_id=rest.id),
+        'menus': menus,
+        'items': MenuItem.objects.filter(menu__in=menus),
         'restaurant': rest,
     }
-    print rest.owned_by.id
     return render(request, 'restaurants/show.html', context)
 
 def upload_profile_pic(request):

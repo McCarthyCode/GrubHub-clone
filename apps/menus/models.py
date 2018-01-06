@@ -38,6 +38,26 @@ class MenuManager(models.Manager):
         menu.delete()
         return (True, errors)
 
+class MenuItemManager(models.Manager):
+    def create_item(self, postData):
+        errors = []
+        errors_exist = False
+        if len(postData['item']) < 1:
+            errors.append("Please enter an Item Name")
+            errors_exist = True
+        if len(postData['price']) < 1:
+            errors.append("Please enter a Price")
+            errors_exist = True
+        MenuItem.objects.create(
+            item=postData['item'],
+            desc=postData['desc'],
+            price=postData['price'],
+            menu=Menu.objects.get(id=postData['menu_id']),
+        )
+        if errors_exist:
+            return (False, errors)
+        return (True, errors)
+
 class Menu(models.Model):
     menu_name = models.CharField(max_length=50)
     restaurant = models.ForeignKey(Restaurant)
@@ -52,3 +72,4 @@ class MenuItem(models.Model):
     menu = models.ForeignKey(Menu)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = MenuItemManager()
