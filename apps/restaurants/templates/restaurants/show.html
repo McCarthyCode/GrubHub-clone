@@ -133,12 +133,45 @@
                         <div class="col-xs-12">
                             <label for="menu_name">Menu Name (required)</label>
                             <br>
-                            <input type="text" name="menu_name" class="form-control" value="{{location.address_1}}">
+                            <input type="text" name="menu_name" class="form-control">
                         </div>
                     </div>
                     <br>
                     <input type="submit" value="Submit" class="btn btn-primary">
                 </form>
+                {% if menus %}
+                <h4>Menus</h4>
+                {% for menu in menus %}
+                <div class="menu-card">
+                    <div class="menu-header">
+                        <h5>{{menu.menu_name.title}}</h5>
+                        <ul>
+                            <li class="edit" data-id="#edit-{{menu.id}}">
+                                Edit
+                            </li>
+                            <li>
+                                <a href="#">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="edit-{{menu.id}}" class="hidden">
+                        <form action="{% url 'menus:update_menu' restaurant.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="menu_id" value="{{menu.id}}">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label for="menu_name">Menu Name (required)</label>
+                                    <br>
+                                    <input type="text" name="menu_name" class="form-control" value="{{menu.menu_name}}">
+                                </div>
+                            </div>
+                            <br>
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
                 {% for location in locations %}
                 <h4>Edit {{location.address_1}}</h4>
                 <form action="update_location" method="post">

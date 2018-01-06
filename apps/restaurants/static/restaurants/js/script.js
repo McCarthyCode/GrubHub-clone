@@ -11,12 +11,16 @@ $(document).ready(function () {
             $input.prop("checked", false);
         }
     });
-    $( "#tabs" ).tabs();
-    $('#tabs a').click(function(){
+    $("#tabs").tabs();
+    $("#tabs a").click(function(){
         var $tabs = $("#tabs li");
         $tabs.addClass('inactive');
         $tabs.addClass('active');
         $(this).parent().addClass('active');
         $(this).parent().removeClass('inactive');
+    });
+    $("li.edit").click(function(){
+        var id = $(this).data("id");
+        $(id).toggleClass("hidden");
     });
 });

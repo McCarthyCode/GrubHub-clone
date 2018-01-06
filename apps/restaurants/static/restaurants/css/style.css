@@ -326,9 +326,6 @@ footer .row {
     text-decoration: none;
     padding: 15px 30px;
 }
-/* .tabs li.active {
-
-} */
 .tabs li.active > a {
     color: white !important;
     background-color: #197bb2;
@@ -336,4 +333,30 @@ footer .row {
 .tabs li.inactive > a {
     color: black !important;
     background-color: #dcdcdc;
+}
+.menu-card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 1px;
+}
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+}
+.menu-header ul {
+    margin: 8px 0 !important;
+}
+.menu-header h5 {
+    font-weight: bold;
+}
+.edit {
+    text-decoration: none;
+    color: #0074e4 !important;
+    cursor: pointer;
+}
+.edit:hover {
+    text-decoration: underline;
+}
+.hidden {
+    display: none;
 }

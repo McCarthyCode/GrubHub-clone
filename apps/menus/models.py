@@ -19,6 +19,16 @@ class MenuManager(models.Manager):
         )
         return (True, ["none"])
 
+    def update_menu(self, postData):
+        errors = []
+        if len(postData['menu_name']) < 1:
+            errors.append("Please enter a Menu Name")
+            return (False, errors)
+        menu = Menu.objects.get(id=postData['menu_id'])
+        menu.menu_name = postData['menu_name']
+        menu.save()
+        return (True, ["none"])
+
 class Menu(models.Model):
     menu_name = models.CharField(max_length=50)
     restaurant = models.ForeignKey(Restaurant)

@@ -15,8 +15,14 @@ from django.shortcuts import render, HttpResponse, redirect
 #     return redirect('menus:menu_home', l_menu_type, rest_id)
 
 def create_menu(request, rest_id):
-    # mm = MenuManger()
     valid, response = Menu.objects.create_menu(request.POST, rest_id)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+    return redirect('restaurants:rest_profile', rest_id)
+
+def update_menu(request, rest_id):
+    valid, response = Menu.objects.update_menu(request.POST)
     if not valid:
         for error in response:
             messages.error(request, error)
