@@ -339,6 +339,7 @@ footer .row {
 }
 .menu-card {
     background: white;
+    border: 1px solid #dcdcdc;
     padding: 15px;
     margin-bottom: 1px;
 }
@@ -371,6 +372,9 @@ footer .row {
 }
 .menu-items p {
     color: #bfbfbf;
+}
+.menu-items p:hover {
+    color: #333333;
 }
 li.edit {
     text-decoration: none;

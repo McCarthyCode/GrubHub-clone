@@ -41,3 +41,10 @@ def update_item(request, rest_id):
         for error in response:
             messages.error(request, error)
     return redirect('restaurants:rest_profile', rest_id)
+
+def destroy_item(request, rest_id, item_id):
+    valid, response = MenuItem.objects.destroy_item(item_id)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+    return redirect('restaurants:rest_profile', rest_id)

@@ -35,6 +35,7 @@ class MenuManager(models.Manager):
         if not menu:
             errors.append("Invalid menu ID")
             return (False, errors)
+        MenuItem.objects.filter(menu=menu).delete()
         menu.delete()
         return (True, errors)
 
@@ -74,6 +75,15 @@ class MenuItemManager(models.Manager):
         item.save()
         if errors_exist:
             return (False, errors)
+        return (True, errors)
+
+    def destroy_item(self, item_id):
+        errors = []
+        item = MenuItem.objects.get(id=item_id)
+        if not item:
+            errors.append("Invalid item ID")
+            return (False, errors)
+        item.delete()
         return (True, errors)
 
 class Menu(models.Model):
