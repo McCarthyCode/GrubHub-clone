@@ -23,7 +23,9 @@
     {% for location in locations %}
         '{{location.address_1}} {{location.city}}, {{location.state}} {{location.zip_code}}',
     {% endfor %}
-    ])">
+    ]);
+    getLocation();
+    ">
     <nav class="navbar navbar-toggleable-md navbar-dark navbar-fixed-top bg-faded">
         <div class="row">
             <div class="col-md-2 col-sm-9">
@@ -33,7 +35,7 @@
             </div>
             <form action="#">
                 <div class="input col-md-4 hidden-sm hidden-xs bl">
-                    <input type="text" placeholder="Where are you? (Required)">
+                    <input type="text" id="location" name="location" placeholder="Where are you? (Required)">
                     <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
                 </div>
                 <div class="input col-md-3 hidden-sm hidden-xs bl">

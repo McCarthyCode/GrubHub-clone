@@ -10,13 +10,14 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     {% load static %}
+    <script src="{% static 'restaurants/js/maps.js' %}"></script>
     <link rel="shortcut icon" type="image/png" href="{% static 'users/img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 </head>
-<body>
+<body onload="getLocation();">
     <nav class="navbar navbar-toggleable-md navbar-dark bg-faded">
         <div class="container hidden-phone">
             <div class="row">
@@ -27,7 +28,7 @@
                 </div>
                 <form action="#">
                     <div class="input col-xs-4 bl">
-                        <input type="text" placeholder="Where are you? (Required)">
+                        <input type="text" id="location" name="location" placeholder="Where are you? (Required)">
                         <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
                     </div>
                     <div class="input col-xs-3 bl">

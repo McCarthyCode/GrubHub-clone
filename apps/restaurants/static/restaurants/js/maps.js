@@ -24,3 +24,24 @@ function codeAddresses(addresses) {
         });
     }
 }
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
+function showPosition(position) {
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
+    url += lat + "," + lon + "&sensor=true"
+    $(document).ready(function () {
+        $.getJSON(url, function(data){
+            if (data["results"]) {
+                var location = data["results"][0]["formatted_address"];
+                $("#location").attr("value", location);
+            }
+        });
+    });
+}
