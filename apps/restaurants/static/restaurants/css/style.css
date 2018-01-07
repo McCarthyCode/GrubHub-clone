@@ -353,12 +353,21 @@ footer .row {
 .menu-header ul {
     margin: 8px 0 !important;
 }
-.menu-items li {
+.menu-items > li {
     display: inline-block;
     background-color: white;
+    border: 1px solid #dcdcdc;
+    vertical-align: top;
     padding: 15px;
-    width: 49.75%;
+    width: 49.5%;
     margin-bottom: 5px;
+}
+.menu-items .header {
+    display: flex;
+    justify-content: space-between;
+}
+.menu-items ul {
+    margin: 8px 0 !important;
 }
 .menu-items p {
     color: #bfbfbf;

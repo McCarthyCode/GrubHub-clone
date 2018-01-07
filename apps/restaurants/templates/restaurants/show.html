@@ -145,7 +145,7 @@
                     <div class="menu-header">
                         <h5>{{menu.menu_name.title}}</h5>
                         <ul>
-                            <li class="edit" data-id="#edit-{{menu.id}}">
+                            <li class="edit" data-id="#edit-menu-{{menu.id}}">
                                 Edit
                             </li>
                             <li>
@@ -153,7 +153,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div id="edit-{{menu.id}}" class="edit hidden">
+                    <div id="edit-menu-{{menu.id}}" class="edit hidden">
                         <h5>Edit Menu</h5>
                         <form action="{% url 'menus:update_menu' restaurant.id %}" method="POST">
                             {% csrf_token %}
@@ -199,6 +199,60 @@
                             <br>
                             <input type="submit" value="Add" class="btn btn-primary">
                         </form>
+                        <ul class="menu-items">
+                            {% for item in items %}
+                            {% if item.menu.id == menu.id %}
+                            <li>
+                                <div class="header">
+                                    <h5>{{item.item}} - ${{item.price}}</h5>
+                                    <ul>
+                                        <li class="edit" data-id="#edit-item-{{item.id}}">
+                                            Edit
+                                        </li>
+                                        <li>
+                                            <a href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p>{{item.desc}}</p>
+                                <div id="edit-item-{{item.id}}" class="edit hidden">
+                                    <form action="{% url 'menus:update_item' restaurant.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item_id" value="{{item.id}}">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <label for="item">Menu Item (required)</label>
+                                                <br>
+                                                <input type="text" name="item" class="form-control" value="{{item.item}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <label for="price">Price (required)</label>
+                                                <br>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-addon input-group-prepend">
+                                                        <span class="input-group-text">$</span>
+                                                    </div>
+                                                    <input type="text" name="price" class="form-control" value="{{item.price}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <label for="desc">Description (optional)</label>
+                                                <br>
+                                                <textarea name="desc" id="desc" class="form-control" rows="3">{{item.desc}}</textarea>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="submit" value="Edit" class="btn btn-primary">
+                                    </form>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 {% endfor %}

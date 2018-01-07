@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^update_menu$', views.update_menu, name="update_menu"),
     url(r'^destroy_menu/(?P<menu_id>\d+)$', views.destroy_menu, name="destroy_menu"),
     url(r'^create_item$', views.create_item, name="create_item"),
+    url(r'^update_item$', views.update_item, name="update_item"),
 ]

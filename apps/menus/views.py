@@ -34,3 +34,10 @@ def create_item(request, rest_id):
         for error in response:
             messages.error(request, error)
     return redirect('restaurants:rest_profile', rest_id)
+
+def update_item(request, rest_id):
+    valid, response = MenuItem.objects.update_item(request.POST)
+    if not valid:
+        for error in response:
+            messages.error(request, error)
+    return redirect('restaurants:rest_profile', rest_id)

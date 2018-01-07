@@ -58,6 +58,24 @@ class MenuItemManager(models.Manager):
             return (False, errors)
         return (True, errors)
 
+    def update_item(self, postData):
+        errors = []
+        errors_exist = False
+        if len(postData['item']) < 1:
+            errors.append("Please enter an Item Name")
+            errors_exist = True
+        if len(postData['price']) < 1:
+            errors.append("Please enter a Price")
+            errors_exist = True
+        item = MenuItem.objects.get(id=postData['item_id'])
+        item.item = postData['item']
+        item.desc = postData['desc']
+        item.price = postData['price']
+        item.save()
+        if errors_exist:
+            return (False, errors)
+        return (True, errors)
+
 class Menu(models.Model):
     menu_name = models.CharField(max_length=50)
     restaurant = models.ForeignKey(Restaurant)
